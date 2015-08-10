@@ -1,0 +1,44 @@
+@import "./variables";
+
+.example {
+    &.slider {
+        width: $size_px;
+        margin: 0 auto;
+    }
+    .content {
+        position: relative;
+        min-height: $size_px;
+    }
+    .page {
+        position: absolute;
+        width: $size_px;
+
+        .image-container {
+            position: relative;
+            background-color: #f0f0f0;
+        }
+        .image-container,
+        .preloader,
+        .image {
+            width: $size_px;
+            height: $size_px;  
+        }
+        .preloader,
+        .image {
+            position: absolute;
+        }
+        .image { 
+            background-repeat: no-repeat;
+            background-size: cover;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity .4s;
+        }
+    }
+    @for $i from 1 through 10 {
+        .page:nth-child(#{$i}) {
+            top: 0;
+            left: 1px * (($i - 1) * $size);
+        }
+    }
+}

@@ -1,0 +1,1 @@
+.slider{overflow:hidden}.slider .content{transition-property:-webkit-transform;transition-property:transform;transition-timing-function:ease-out;-webkit-transform:translate3d(0,0,0)}.slider .page{cursor:-webkit-grab;cursor:grab}.slider .page:active{cursor:-webkit-grabbing;cursor:grabbing}

@@ -1,0 +1,53 @@
+{
+  "name": "mithril-slider",
+  "version": "0.0.0",
+  "description": "Content slider for Mithril for mobile and desktop",
+  "keywords": [
+    "scroll",
+    "infinite",
+    "mithril"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ArthurClemens/mithril-slider.git"
+  },
+  "author": "Arthur Clemens <arthurclemens@gmail.com> (http://visiblearea.com)",
+  "license": "MIT",
+  "main": "index.js",
+  "directories": {
+    "src": "src",
+    "baseURL": "src"
+  },
+  "dependencies": {
+    "mithril": "^0.2.0",
+    "hammerjs": "^2.0.4"
+  },
+  "devDependencies": {
+    "autoprefixer": "",
+    "babel-core": "",
+    "babel-plugin-closure-elimination": "",
+    "chokidar": "",
+    "es6-module-loader": "",
+    "system-css": "",
+    "systemjs-builder": "",
+    "systemjs": ""
+  },
+  "scripts": {
+    "postinstall": "node scripts/copy-libs-examples.js examples/src/lib",
+    "transpile-examples-js": "mkdir -p examples/src/lib/mithril-slider/ && cp lib/mithril-slider.js examples/src/lib/mithril-slider/ && cp lib/mithril-slider.css examples/src/lib/mithril-slider/ && babel examples/src/app/index/index.es6.js --out-file examples/src/app/index/index.js && babel examples/src/app/app/common.es6.js --out-file examples/src/app/app/common.js && babel examples/src/app/controls/controls.es6.js --out-file examples/src/app/controls/controls.js && babel examples/src/app/group/group.es6.js --out-file examples/src/app/group/group.js && babel examples/src/app/images/images.es6.js --out-file examples/src/app/images/images.js && babel examples/src/app/pages/pages.es6.js --out-file examples/src/app/pages/pages.js && babel examples/src/app/vertical/vertical.es6.js --out-file examples/src/app/vertical/vertical.js",
+    "autoprefixer": "autoprefixer examples/src/app/**/*.css -b 'last 2 versions'",
+    "transpile-examples-css": "sass --update --sourcemap=none examples/src/app/ && npm run autoprefixer",
+    "transpile-examples": "npm run transpile-examples-css && npm run transpile-examples-js",
+    "build-examples": "node scripts/build-app.js examples",
+    "watch-examples-es6": "node scripts/watch-es6.js examples/src/ examples/src/lib/",
+    "watch-examples-css": "node scripts/watch-scss.js examples/src/ examples/src/lib/",
+    "watch-examples": "npm run watch-examples-es6 & npm run watch-examples-css",
+    "watch-source-css": "node scripts/watch-scss.js lib/",
+    "watch-source-es6": "node scripts/watch-es6.js lib/",
+    "watch-source": "npm run watch-source-css & npm run watch-source-es6",
+    "watch": "npm run watch-source & npm run watch-examples",
+    "copy-libs": "node scripts/copy-libs-examples examples/src/lib",
+    "copy-to-gh": "cp -R examples/build/* ../gh-pages/",
+    "github": "rm -rf ../gh-pages/app && rm -rf ../gh-pages/*.html && rm -rf ../gh-pages/lib && rm -rf ../gh-pages/config.js && npm run build-examples && npm run copy-to-gh"
+  }
+}
