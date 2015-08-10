@@ -1137,6 +1137,52 @@ System.registerDynamic("app/pages/pages", ["lib/mithril/mithril.min", "lib/mithr
   return module.exports;
 });
 
+System.registerDynamic("app/app/common", ["lib/mithril/mithril.min"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  "use strict";
+  Object.defineProperty(exports, "__esModule", {value: true});
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {"default": obj};
+  }
+  var _mithril = require("lib/mithril/mithril.min");
+  var _mithril2 = _interopRequireDefault(_mithril);
+  var DATA_URL = "app/data/server.json";
+  var vm = {seen: {}};
+  exports["default"] = {
+    getPageData: function getPageData() {
+      var url = arguments[0] === undefined ? DATA_URL : arguments[0];
+      return _mithril2["default"].request({
+        method: "GET",
+        url: url,
+        background: false
+      });
+    },
+    fadeInImage: function fadeInImage(el, url) {
+      var showImage = function showImage() {
+        el.style.backgroundImage = "url(" + url + ")";
+        el.style.opacity = 1;
+        vm.seen[url] = 1;
+      };
+      function _ref() {
+        showImage();
+      }
+      if (!vm.seen[url]) {
+        var img = new Image;
+        img.onload = _ref;
+        img.src = url;
+      } else {
+        showImage();
+      }
+    }
+  };
+  module.exports = exports["default"];
+  global.define = __define;
+  return module.exports;
+});
+
 System.registerDynamic("lib/mithril-slider/mithril-slider", ["lib/mithril/mithril.min", "lib/hammerjs/hammer.min", "lib/mithril-slider/mithril-slider.css!lib/system-css/css"], true, function(require, exports, module) {
   ;
   var global = this,
@@ -1330,52 +1376,6 @@ System.registerDynamic("lib/mithril-slider/mithril-slider", ["lib/mithril/mithri
     return createView(ctrl, opts);
   };
   exports["default"] = slider;
-  module.exports = exports["default"];
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("app/app/common", ["lib/mithril/mithril.min"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  "use strict";
-  Object.defineProperty(exports, "__esModule", {value: true});
-  function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {"default": obj};
-  }
-  var _mithril = require("lib/mithril/mithril.min");
-  var _mithril2 = _interopRequireDefault(_mithril);
-  var DATA_URL = "app/data/server.json";
-  var vm = {seen: {}};
-  exports["default"] = {
-    getPageData: function getPageData() {
-      var url = arguments[0] === undefined ? DATA_URL : arguments[0];
-      return _mithril2["default"].request({
-        method: "GET",
-        url: url,
-        background: false
-      });
-    },
-    fadeInImage: function fadeInImage(el, url) {
-      var showImage = function showImage() {
-        el.style.backgroundImage = "url(" + url + ")";
-        el.style.opacity = 1;
-        vm.seen[url] = 1;
-      };
-      function _ref() {
-        showImage();
-      }
-      if (!vm.seen[url]) {
-        var img = new Image;
-        img.onload = _ref;
-        img.src = url;
-      } else {
-        showImage();
-      }
-    }
-  };
   module.exports = exports["default"];
   global.define = __define;
   return module.exports;
