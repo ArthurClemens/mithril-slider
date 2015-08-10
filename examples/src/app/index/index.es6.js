@@ -6,6 +6,7 @@ import vertical from 'app/vertical/vertical';
 import controls from 'app/controls/controls';
 import group from 'app/group/group';
 import pages from 'app/pages/pages';
+import github from 'app/app/github';
 require('./index.css!');
 
 const menuData = [
@@ -50,7 +51,8 @@ let app = {};
 app.view = () => {
     return m('div', [
         m('h1', 'Content slider for Mithril'),
-        menu
+        menu,
+        github
     ]);
 };
 
