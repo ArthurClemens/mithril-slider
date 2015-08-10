@@ -4,6 +4,7 @@ import m from 'mithril';
 import slider from 'mithril-slider';
 import common from 'app/app/common';
 import preloader from 'app/preloader/preloader';
+import github from 'app/app/github';
 require('app/app/common.css!');
 
 const createPage = (opts) => {
@@ -33,7 +34,8 @@ example.view = () => {
 			pageData: common.getPageData,
             page: createPage,
             class: 'example images'
-        })
+        }),
+        github
     ];
 };
 

@@ -4,6 +4,7 @@ import m from 'mithril';
 import slider from 'mithril-slider';
 import common from 'app/app/common';
 import preloader from 'app/preloader/preloader';
+import github from 'app/app/github';
 require('app/app/common.css!');
 require('./controls.css!');
 
@@ -63,10 +64,11 @@ example.view = (ctrl) => {
             onclick: () => sliderController.goNext()
         }, 'Next')
     ]) : null;
-    return m('.content', [
+    return [
         mySlider,
-        sliderControls
-    ]);
+        sliderControls,
+        github
+    ];
 };
 
 export default example;

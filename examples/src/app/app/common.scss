@@ -1,5 +1,15 @@
 @import "./variables";
 
+a:link,
+a:visited {
+    color: #1E88E5;
+    text-decoration: none;
+}
+
+.view {
+    height: 100%;
+}
+
 .example {
     &.slider {
         width: $size_px;
@@ -41,4 +51,13 @@
             left: 1px * (($i - 1) * $size);
         }
     }
+}
+
+.github {
+    width: $size_px;
+    margin: 32px auto 0 auto;
+    text-align: center;
+    padding: 24px 16px;
+    font-size: 14px;
+    color: rgba(0,0,0,.35);
 }

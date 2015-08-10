@@ -4,6 +4,7 @@ import m from 'mithril';
 import slider from 'mithril-slider';
 import common from 'app/app/common';
 import preloader from 'app/preloader/preloader';
+import github from 'app/app/github';
 require('app/app/common.css!');
 require('./vertical.css!');
 
@@ -35,7 +36,8 @@ example.view = () => {
 			page: createPage,
 			class: 'example vertical',
             orientation: 'vertical'
-        })
+        }),
+        github
     ];
 };
 

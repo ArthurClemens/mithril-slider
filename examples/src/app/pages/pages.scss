@@ -4,9 +4,17 @@
     }
     .content {
     	height: 100%;
-        overflow-y: auto;
     }
     .page {
+        height: 100%;
+        -webkit-overflow-scrolling: touch;
+        overflow-y: scroll;
+        position: static;
+        float: left;
+        
+        .article {
+        }
+
         .article-content {
             padding: 20px 16px;
         }
