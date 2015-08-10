@@ -1,6 +1,6 @@
 {
   "name": "mithril-slider",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Content slider for Mithril for mobile and desktop",
   "keywords": [
     "scroll",
