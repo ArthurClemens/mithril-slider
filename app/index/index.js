@@ -67,6 +67,54 @@ System.registerDynamic("app/index/index", ["lib/mithril/mithril.min", "app/image
   return module.exports;
 });
 
+System.registerDynamic("app/images/images", ["lib/mithril/mithril.min", "lib/mithril-slider/mithril-slider", "app/app/common", "app/preloader/preloader", "app/app/github", "app/app/common.css!lib/system-css/css"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  "use strict";
+  Object.defineProperty(exports, "__esModule", {value: true});
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {"default": obj};
+  }
+  var _mithril = require("lib/mithril/mithril.min");
+  var _mithril2 = _interopRequireDefault(_mithril);
+  var _mithrilSlider = require("lib/mithril-slider/mithril-slider");
+  var _mithrilSlider2 = _interopRequireDefault(_mithrilSlider);
+  var _appAppCommon = require("app/app/common");
+  var _appAppCommon2 = _interopRequireDefault(_appAppCommon);
+  var _appPreloaderPreloader = require("app/preloader/preloader");
+  var _appPreloaderPreloader2 = _interopRequireDefault(_appPreloaderPreloader);
+  var _appAppGithub = require("app/app/github");
+  var _appAppGithub2 = _interopRequireDefault(_appAppGithub);
+  require("app/app/common.css!lib/system-css/css");
+  var createPage = function createPage(opts) {
+    var currentIndex = opts.currentIndex;
+    var listIndex = opts.listIndex;
+    var data = opts.data;
+    var inRange = Math.abs(currentIndex - listIndex) < 2;
+    var content = inRange ? (0, _mithril2["default"])(".image-container", [(0, _mithril2["default"])(".image", {config: function config(el, inited) {
+        if (inited) {
+          return;
+        }
+        _appAppCommon2["default"].fadeInImage(el, data);
+      }}), _appPreloaderPreloader2["default"]]) : null;
+    return (0, _mithril2["default"])(".page", content);
+  };
+  var example = {};
+  example.view = function() {
+    return [_mithril2["default"].component(_mithrilSlider2["default"], {
+      pageData: _appAppCommon2["default"].getPageData,
+      page: createPage,
+      "class": "example images"
+    }), _appAppGithub2["default"]];
+  };
+  exports["default"] = example;
+  module.exports = exports["default"];
+  global.define = __define;
+  return module.exports;
+});
+
 (function() {
 var _removeDefine = System.get("@@amd-helpers").createDefine();
 var m = function a(b, c) {
@@ -799,54 +847,6 @@ var m = function a(b, c) {
 
 _removeDefine();
 })();
-System.registerDynamic("app/images/images", ["lib/mithril/mithril.min", "lib/mithril-slider/mithril-slider", "app/app/common", "app/preloader/preloader", "app/app/github", "app/app/common.css!lib/system-css/css"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  "use strict";
-  Object.defineProperty(exports, "__esModule", {value: true});
-  function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {"default": obj};
-  }
-  var _mithril = require("lib/mithril/mithril.min");
-  var _mithril2 = _interopRequireDefault(_mithril);
-  var _mithrilSlider = require("lib/mithril-slider/mithril-slider");
-  var _mithrilSlider2 = _interopRequireDefault(_mithrilSlider);
-  var _appAppCommon = require("app/app/common");
-  var _appAppCommon2 = _interopRequireDefault(_appAppCommon);
-  var _appPreloaderPreloader = require("app/preloader/preloader");
-  var _appPreloaderPreloader2 = _interopRequireDefault(_appPreloaderPreloader);
-  var _appAppGithub = require("app/app/github");
-  var _appAppGithub2 = _interopRequireDefault(_appAppGithub);
-  require("app/app/common.css!lib/system-css/css");
-  var createPage = function createPage(opts) {
-    var currentIndex = opts.currentIndex;
-    var listIndex = opts.listIndex;
-    var data = opts.data;
-    var inRange = Math.abs(currentIndex - listIndex) < 2;
-    var content = inRange ? (0, _mithril2["default"])(".image-container", [(0, _mithril2["default"])(".image", {config: function config(el, inited) {
-        if (inited) {
-          return;
-        }
-        _appAppCommon2["default"].fadeInImage(el, data);
-      }}), _appPreloaderPreloader2["default"]]) : null;
-    return (0, _mithril2["default"])(".page", content);
-  };
-  var example = {};
-  example.view = function() {
-    return [_mithril2["default"].component(_mithrilSlider2["default"], {
-      pageData: _appAppCommon2["default"].getPageData,
-      page: createPage,
-      "class": "example images"
-    }), _appAppGithub2["default"]];
-  };
-  exports["default"] = example;
-  module.exports = exports["default"];
-  global.define = __define;
-  return module.exports;
-});
-
 System.registerDynamic("app/vertical/vertical", ["lib/mithril/mithril.min", "lib/mithril-slider/mithril-slider", "app/app/common", "app/preloader/preloader", "app/app/github", "app/app/common.css!lib/system-css/css", "app/vertical/vertical.css!lib/system-css/css"], true, function(require, exports, module) {
   ;
   var global = this,
@@ -1208,10 +1208,12 @@ System.registerDynamic("lib/mithril-slider/mithril-slider", ["lib/mithril/mithri
     })), opts.after ? (0, _mithril2["default"])(".after", opts.after) : null);
   };
   var slider = {};
+  function _ref(el, idx) {
+    return el.childNodes[idx];
+  }
   slider.controller = function() {
     var opts = arguments[0] === undefined ? {} : arguments[0];
     var defaultDuration = parseInt(opts.duration, 10) || 250;
-    var pageSelector = opts.pageSelector || ".page";
     var index = _mithril2["default"].prop(opts.index || 0);
     var list = opts.pageData();
     list.then(_mithril2["default"].redraw);
@@ -1224,9 +1226,7 @@ System.registerDynamic("lib/mithril-slider/mithril-slider", ["lib/mithril/mithri
       index(idx);
       _mithril2["default"].redraw();
     };
-    var getPageEl = function getPageEl(el, idx) {
-      return el.querySelectorAll(pageSelector)[idx];
-    };
+    var getPageEl = _ref;
     var setTransitionStyle = function setTransitionStyle(el, value) {
       var style = el.style;
       var attrs = isVertical ? "0, " + value + "px, 0" : value + "px, 0, 0";
@@ -1281,7 +1281,7 @@ System.registerDynamic("lib/mithril-slider/mithril-slider", ["lib/mithril/mithri
       return index() > 0;
     };
     var updateContentSize = function updateContentSize(el) {
-      var page = el.querySelector(pageSelector);
+      var page = el.childNodes[0];
       var prop = isVertical ? "height" : "width";
       pageSize = page.getBoundingClientRect()[prop];
       el.style[prop] = list().length * pageSize + "px";
