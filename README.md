@@ -2,7 +2,7 @@
 
 Handles series of pageable content. This code is a Mithril component wrapper around [HammerJS](http://hammerjs.github.io/), with additional features.
 
-Version 0.1.0
+Version 0.1.2
 
 
 ## Features
