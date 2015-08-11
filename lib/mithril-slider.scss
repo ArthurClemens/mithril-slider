@@ -6,7 +6,7 @@
 		transition-property: transform;
 		transition-timing-function: ease-out;
 		// transition-duration set in js
-		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
 	}
 	.page {
 		cursor: grab;

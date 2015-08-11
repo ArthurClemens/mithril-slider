@@ -2,7 +2,8 @@
 
 import m from 'mithril';
 
-const DATA_URL = 'app/data/server.json'; //'app/data/local.json'
+const DATA_URL = 'app/data/server.json';
+//const DATA_URL = 'app/data/local.json';
 
 const vm = {
     seen: {}
