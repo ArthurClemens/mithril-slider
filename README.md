@@ -85,8 +85,6 @@ For parameter `page`, create a function that returns a Mithril object for each s
 
 This function will be called for all list items.
 
-Instead of class `.page`, a different selector can be used as long as this is passed in the option `pageSelector`.
-
 
 ### Optimizing with lazy loading
 
@@ -181,7 +179,6 @@ With vertical orientation and `position: absolute`, the page must have a height.
 | **before** | optional | Mithril template or component | | Content shown before the pages; has class `before` |
 | **after** | optional | Mithril template or component | | Content shown after the pages; has class `after` |
 | **index** | optional | Number | 0 | Starting page index |
-| **pageSelector** | optional | String | '.page' | DOM selector for page elements |
 | **cancelDragFactor** | optional | Number | 1/5 | Fraction of page width below which the transition is cancelled |
 
 
