@@ -37,7 +37,7 @@ example.view = () => {
 			class: 'example vertical',
             orientation: 'vertical'
         }),
-        github
+        github()
     ];
 };
 

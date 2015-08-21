@@ -1,5 +1,12 @@
 @import "../app/variables";
 
+$text_color: #263238;
+$text_color_light: #90A4AE;
+
+$index_block_background_color: #CFD8DC;
+$index_block_text_color: rgba(0,0,0,.85);
+$index_block_text_color_light: rgba(0,0,0,.4);
+
 html, body {
     min-height: 100%;
     height: 100%;
@@ -18,6 +25,8 @@ h1 {
     width: 320px;
     text-align: center;
     font-size: 28px;
+    font-weight: normal;
+    color: $text_color;
 }
 
 .menu {
@@ -27,34 +36,33 @@ h1 {
     list-style: none;
 
     li {
-        margin: 0;
+        margin: 0 0 1px 0;
         padding: 0;
-        border-bottom: 1px solid #fff;
 
         &.header {
             font-size: 18px;
-            color: #aaa;
+            color: $text_color_light;
         }
 
         &.header,
         a {
-            padding: 16px 16px;
+            padding: 20px;
         }
 
         a {
             display: block;
             text-decoration: none;
-            background-color: #f0f0f0;
+            background-color: $index_block_background_color;
 
             .title {
                 display: block;
-                color: #222;
+                color: $index_block_text_color;
                 font-size: 18px;
                 line-height: 1.4 * 18px;
             }
             .subtitle {
                 display: block;
-                color: #999;
+                color: $index_block_text_color_light;
                 font-size: 14px;
             }
         }

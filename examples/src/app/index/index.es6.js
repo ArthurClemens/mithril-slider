@@ -50,9 +50,9 @@ const menu = m('ul.menu', [
 let app = {};
 app.view = () => {
     return m('div', [
-        m('h1', 'Content slider for Mithril'),
+        m('h1', 'Content Slider for Mithril'),
         menu,
-        github
+        github({home: true})
     ]);
 };
 

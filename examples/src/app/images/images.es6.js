@@ -35,7 +35,7 @@ example.view = () => {
             page: createPage,
             class: 'example images'
         }),
-        github
+        github()
     ];
 };
 

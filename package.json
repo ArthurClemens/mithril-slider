@@ -1,7 +1,7 @@
 {
   "name": "mithril-slider",
-  "version": "0.1.2",
-  "description": "Content slider for Mithril for mobile and desktop",
+  "version": "0.1.3",
+  "description": "Content Slider for Mithril on mobile and desktop",
   "keywords": [
     "slider",
     "carousel",
@@ -13,7 +13,7 @@
   },
   "author": "Arthur Clemens <arthurclemens@gmail.com> (http://visiblearea.com)",
   "license": "MIT",
-  "main": "index.js",
+  "main": "lib/mithril-slider.js",
   "directories": {
     "src": "src",
     "baseURL": "src"
@@ -33,12 +33,13 @@
     "systemjs": ""
   },
   "scripts": {
-    "postinstall": "node scripts/copy-libs-examples.js examples/src/lib",
-    "transpile-examples-js": "mkdir -p examples/src/lib/mithril-slider/ && cp lib/mithril-slider.js examples/src/lib/mithril-slider/ && cp lib/mithril-slider.css examples/src/lib/mithril-slider/ && babel examples/src/app/index/index.es6.js --out-file examples/src/app/index/index.js && babel examples/src/app/app/common.es6.js --out-file examples/src/app/app/common.js && babel examples/src/app/app/github.es6.js --out-file examples/src/app/app/github.js && babel examples/src/app/controls/controls.es6.js --out-file examples/src/app/controls/controls.js && babel examples/src/app/group/group.es6.js --out-file examples/src/app/group/group.js && babel examples/src/app/images/images.es6.js --out-file examples/src/app/images/images.js && babel examples/src/app/pages/pages.es6.js --out-file examples/src/app/pages/pages.js && babel examples/src/app/vertical/vertical.es6.js --out-file examples/src/app/vertical/vertical.js",
-    "autoprefixer": "autoprefixer examples/src/app/**/*.css -b 'last 2 versions'",
-    "transpile-examples-css": "sass --update --sourcemap=none examples/src/app/ && npm run autoprefixer",
+    "postinstall": "npm run copy-libs",
+    "transpile-source": "node scripts/watch-es6.js lib/ null once & node scripts/watch-scss.js lib/ null once",
+    "transpile-examples-js": "node scripts/watch-es6.js examples/src/ examples/src/lib/ once",
+    "transpile-examples-css": "node scripts/watch-scss.js examples/src/ examples/src/lib/ once",
     "transpile-examples": "npm run transpile-examples-css && npm run transpile-examples-js",
-    "build-examples": "node scripts/build-app.js examples",
+    "transpile-all": "npm run transpile-source && npm run transpile-examples",
+    "build-examples": "npm run transpile-examples && node scripts/build-examples.js examples",
     "watch-examples-es6": "node scripts/watch-es6.js examples/src/ examples/src/lib/",
     "watch-examples-css": "node scripts/watch-scss.js examples/src/ examples/src/lib/",
     "watch-examples": "npm run watch-examples-es6 & npm run watch-examples-css",
@@ -48,6 +49,6 @@
     "watch": "npm run watch-source & npm run watch-examples",
     "copy-libs": "node scripts/copy-libs-examples examples/src/lib",
     "copy-to-gh": "cp -R examples/build/* ../gh-pages/",
-    "github": "rm -rf ../gh-pages/app && rm -rf ../gh-pages/*.html && rm -rf ../gh-pages/lib && rm -rf ../gh-pages/config.js && npm run build-examples && npm run copy-to-gh"
+    "github": "rm -rf ../gh-pages/app && rm -rf ../gh-pages/*.html && rm -rf ../gh-pages/lib && rm -rf ../gh-pages/config.js && npm run transpile-all && npm run build-examples && npm run copy-to-gh"
   }
 }

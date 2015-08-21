@@ -67,7 +67,7 @@ example.view = (ctrl) => {
     return [
         mySlider,
         sliderControls,
-        github
+        github()
     ];
 };
 
