@@ -52,7 +52,7 @@ System.registerDynamic("app/index/index", ["lib/mithril/mithril.min", "app/image
   })]);
   var app = {};
   app.view = function() {
-    return (0, _mithril2["default"])("div", [(0, _mithril2["default"])("h1", "Content slider for Mithril"), menu, _appAppGithub2["default"]]);
+    return (0, _mithril2["default"])("div", [(0, _mithril2["default"])("h1", "Content Slider for Mithril"), menu, (0, _appAppGithub2["default"])({home: true})]);
   };
   _mithril2["default"].route.mode = "hash";
   _mithril2["default"].route(document.body, "/", {
@@ -839,7 +839,7 @@ System.registerDynamic("app/images/images", ["lib/mithril/mithril.min", "lib/mit
       pageData: _appAppCommon2["default"].getPageData,
       page: createPage,
       "class": "example images"
-    }), _appAppGithub2["default"]];
+    }), (0, _appAppGithub2["default"])()];
   };
   exports["default"] = example;
   module.exports = exports["default"];
@@ -889,7 +889,7 @@ System.registerDynamic("app/vertical/vertical", ["lib/mithril/mithril.min", "lib
       page: createPage,
       "class": "example vertical",
       orientation: "vertical"
-    }), _appAppGithub2["default"]];
+    }), (0, _appAppGithub2["default"])()];
   };
   exports["default"] = example;
   module.exports = exports["default"];
@@ -968,7 +968,7 @@ System.registerDynamic("app/controls/controls", ["lib/mithril/mithril.min", "lib
         return sliderController.goNext();
       }
     }, "Next")]) : null;
-    return [mySlider, sliderControls, _appAppGithub2["default"]];
+    return [mySlider, sliderControls, (0, _appAppGithub2["default"])()];
   };
   exports["default"] = example;
   module.exports = exports["default"];
@@ -1067,7 +1067,7 @@ System.registerDynamic("app/group/group", ["lib/mithril/mithril.min", "lib/mithr
         return sliderController.goNext();
       }
     }, "Next")] : null);
-    return [sliderControls, mySlider, _appAppGithub2["default"]];
+    return [sliderControls, mySlider, (0, _appAppGithub2["default"])()];
   };
   exports["default"] = example;
   module.exports = exports["default"];
@@ -1139,7 +1139,7 @@ System.registerDynamic("app/pages/pages", ["lib/mithril/mithril.min", "lib/mithr
   return module.exports;
 });
 
-System.registerDynamic("app/app/github", ["lib/mithril/mithril.min"], true, function(require, exports, module) {
+System.registerDynamic("app/app/github", ["lib/mithril/mithril.min", "app/app/github.css!lib/system-css/css"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -1151,7 +1151,14 @@ System.registerDynamic("app/app/github", ["lib/mithril/mithril.min"], true, func
   }
   var _mithril = require("lib/mithril/mithril.min");
   var _mithril2 = _interopRequireDefault(_mithril);
-  var content = (0, _mithril2["default"])(".github", _mithril2["default"].trust('mithril-slider, Content slider for Mithril for mobile and desktop. Project page on <a href="https://github.com/ArthurClemens/mithril-slider">Github</a>.'));
+  require("app/app/github.css!lib/system-css/css");
+  var content = function content() {
+    var opts = arguments[0] === undefined ? {} : arguments[0];
+    return (0, _mithril2["default"])(".github", [!opts.home ? (0, _mithril2["default"])("a", {
+      href: "/",
+      config: _mithril2["default"].route
+    }, "All examples") : null, (0, _mithril2["default"])("hr"), _mithril2["default"].trust('mithril-slider, Content Slider for Mithril on mobile and desktop. Project page on <a href="https://github.com/ArthurClemens/mithril-slider">Github</a>.')]);
+  };
   exports["default"] = content;
   module.exports = exports["default"];
   global.define = __define;
