@@ -1,5 +1,5 @@
 "bundle";
-System.registerDynamic("app/index/index", ["lib/mithril/mithril.min", "app/images/images", "app/vertical/vertical", "app/controls/controls", "app/group/group", "app/pages/pages", "app/app/github", "app/index/index.css!lib/system-css/css"], true, function(require, exports, module) {
+System.registerDynamic("app/index/index", ["lib/mithril/mithril.min", "app/images/images", "app/vertical/vertical", "app/controls/controls", "app/group/group", "app/pages/pages", "app/multiple/multiple", "app/app/github", "app/index/index.css!lib/system-css/css"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -20,6 +20,8 @@ System.registerDynamic("app/index/index", ["lib/mithril/mithril.min", "app/image
   var _appGroupGroup2 = _interopRequireDefault(_appGroupGroup);
   var _appPagesPages = require("app/pages/pages");
   var _appPagesPages2 = _interopRequireDefault(_appPagesPages);
+  var _appMultipleMultiple = require("app/multiple/multiple");
+  var _appMultipleMultiple2 = _interopRequireDefault(_appMultipleMultiple);
   var _appAppGithub = require("app/app/github");
   var _appAppGithub2 = _interopRequireDefault(_appAppGithub);
   require("app/index/index.css!lib/system-css/css");
@@ -43,6 +45,10 @@ System.registerDynamic("app/index/index", ["lib/mithril/mithril.min", "app/image
     href: "/pages",
     title: "Page content",
     subtitle: "More diverse content, lazily loaded."
+  }, {
+    href: "/multiple",
+    title: "Multiple",
+    subtitle: "Multiple sliders on one page."
   }];
   var menu = (0, _mithril2["default"])("ul.menu", [(0, _mithril2["default"])("li.header", "Examples"), menuData.map(function(menuItem) {
     return (0, _mithril2["default"])("li", (0, _mithril2["default"])("a", {
@@ -61,7 +67,8 @@ System.registerDynamic("app/index/index", ["lib/mithril/mithril.min", "app/image
     "/vertical": _appVerticalVertical2["default"],
     "/controls": _appControlsControls2["default"],
     "/group": _appGroupGroup2["default"],
-    "/pages": _appPagesPages2["default"]
+    "/pages": _appPagesPages2["default"],
+    "/multiple": _appMultipleMultiple2["default"]
   });
   global.define = __define;
   return module.exports;
@@ -834,12 +841,12 @@ System.registerDynamic("app/images/images", ["lib/mithril/mithril.min", "lib/mit
     return (0, _mithril2["default"])(".page", content);
   };
   var example = {};
-  example.view = function() {
-    return [_mithril2["default"].component(_mithrilSlider2["default"], {
+  example.view = function(ctrl, opts) {
+    return (0, _mithril2["default"])("div", [_mithril2["default"].component(_mithrilSlider2["default"], {
       pageData: _appAppCommon2["default"].getPageData,
       page: createPage,
       "class": "example images"
-    }), (0, _appAppGithub2["default"])()];
+    }), opts.hideGithub ? null : (0, _appAppGithub2["default"])()]);
   };
   exports["default"] = example;
   module.exports = exports["default"];
@@ -883,13 +890,14 @@ System.registerDynamic("app/vertical/vertical", ["lib/mithril/mithril.min", "lib
     return (0, _mithril2["default"])(".page", content);
   };
   var example = {};
-  example.view = function() {
-    return [_mithril2["default"].component(_mithrilSlider2["default"], {
+  example.view = function(ctrl) {
+    var opts = arguments[1] === undefined ? {} : arguments[1];
+    return (0, _mithril2["default"])("div", [_mithril2["default"].component(_mithrilSlider2["default"], {
       pageData: _appAppCommon2["default"].getPageData,
       page: createPage,
       "class": "example vertical",
       orientation: "vertical"
-    }), (0, _appAppGithub2["default"])()];
+    }), opts.hideGithub ? null : (0, _appAppGithub2["default"])()]);
   };
   exports["default"] = example;
   module.exports = exports["default"];
@@ -919,6 +927,21 @@ System.registerDynamic("app/controls/controls", ["lib/mithril/mithril.min", "lib
   var _appAppGithub2 = _interopRequireDefault(_appAppGithub);
   require("app/app/common.css!lib/system-css/css");
   require("app/controls/controls.css!lib/system-css/css");
+  var callRight = function callRight(fn) {
+    for (var _len = arguments.length,
+        args = Array(_len > 1 ? _len - 1 : 0),
+        _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+    return function() {
+      for (var _len2 = arguments.length,
+          remainingArgs = Array(_len2),
+          _key2 = 0; _key2 < _len2; _key2++) {
+        remainingArgs[_key2] = arguments[_key2];
+      }
+      return fn.apply(undefined, remainingArgs.concat(args));
+    };
+  };
   var createPage = function createPage(opts) {
     var currentIndex = opts.currentIndex;
     var listIndex = opts.listIndex;
@@ -939,10 +962,10 @@ System.registerDynamic("app/controls/controls", ["lib/mithril/mithril.min", "lib
       isEditing: _mithril2["default"].prop(false)
     };
   };
-  example.view = function(ctrl) {
+  example.view = function(ctrl, opts) {
     var sliderController = ctrl.sliderController();
     var mySlider = _mithril2["default"].component(_mithrilSlider2["default"], {
-      pageData: _appAppCommon2["default"].getPageData,
+      pageData: callRight(_appAppCommon2["default"].getPageData, "app/data/local.json"),
       page: createPage,
       sliderController: ctrl.sliderController,
       "class": "example controls"
@@ -968,7 +991,7 @@ System.registerDynamic("app/controls/controls", ["lib/mithril/mithril.min", "lib
         return sliderController.goNext();
       }
     }, "Next")]) : null;
-    return [mySlider, sliderControls, (0, _appAppGithub2["default"])()];
+    return (0, _mithril2["default"])("div", [mySlider, sliderControls, opts.hideGithub ? null : (0, _appAppGithub2["default"])()]);
   };
   exports["default"] = example;
   module.exports = exports["default"];
@@ -1035,7 +1058,7 @@ System.registerDynamic("app/group/group", ["lib/mithril/mithril.min", "lib/mithr
       groupBy: _mithril2["default"].prop(3)
     };
   };
-  example.view = function(ctrl) {
+  example.view = function(ctrl, opts) {
     var sliderController = ctrl.sliderController();
     var groupBy = ctrl.groupBy();
     var mySlider = _mithril2["default"].component(_mithrilSlider2["default"], {
@@ -1067,7 +1090,7 @@ System.registerDynamic("app/group/group", ["lib/mithril/mithril.min", "lib/mithr
         return sliderController.goNext();
       }
     }, "Next")] : null);
-    return [sliderControls, mySlider, (0, _appAppGithub2["default"])()];
+    return (0, _mithril2["default"])("div", [sliderControls, mySlider, opts.hideGithub ? null : (0, _appAppGithub2["default"])()]);
   };
   exports["default"] = example;
   module.exports = exports["default"];
@@ -1127,11 +1150,39 @@ System.registerDynamic("app/pages/pages", ["lib/mithril/mithril.min", "lib/mithr
   };
   var example = {};
   example.view = function() {
-    return [_mithril2["default"].component(_mithrilSlider2["default"], {
+    return _mithril2["default"].component(_mithrilSlider2["default"], {
       pageData: callRight(_appAppCommon2["default"].getPageData, DATA_URL),
       page: createPage,
       "class": "example pages"
-    })];
+    });
+  };
+  exports["default"] = example;
+  module.exports = exports["default"];
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("app/multiple/multiple", ["lib/mithril/mithril.min", "app/images/images", "app/controls/controls", "app/app/github"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  "use strict";
+  Object.defineProperty(exports, "__esModule", {value: true});
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {"default": obj};
+  }
+  var _mithril = require("lib/mithril/mithril.min");
+  var _mithril2 = _interopRequireDefault(_mithril);
+  var _appImagesImages = require("app/images/images");
+  var _appImagesImages2 = _interopRequireDefault(_appImagesImages);
+  var _appControlsControls = require("app/controls/controls");
+  var _appControlsControls2 = _interopRequireDefault(_appControlsControls);
+  var _appAppGithub = require("app/app/github");
+  var _appAppGithub2 = _interopRequireDefault(_appAppGithub);
+  var example = {};
+  example.view = function() {
+    return [_mithril2["default"].component(_appImagesImages2["default"], {hideGithub: true}), _mithril2["default"].component(_appControlsControls2["default"], {hideGithub: true}), (0, _appAppGithub2["default"])()];
   };
   exports["default"] = example;
   module.exports = exports["default"];
