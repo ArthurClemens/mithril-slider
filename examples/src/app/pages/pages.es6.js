@@ -44,13 +44,11 @@ const createPage = (opts) => {
 
 let example = {};
 example.view = () => {
-    return [
-        m.component(slider, {
-			pageData: callRight(common.getPageData, DATA_URL),
-            page: createPage,
-            class: 'example pages'
-        })
-    ];
+    return m.component(slider, {
+		pageData: callRight(common.getPageData, DATA_URL),
+        page: createPage,
+        class: 'example pages'
+    });
 };
 
 export default example;

@@ -44,7 +44,7 @@ example.controller = () => {
         groupBy: m.prop(3)
     };
 };
-example.view = (ctrl) => {
+example.view = (ctrl, opts) => {
     const sliderController = ctrl.sliderController();
     const groupBy = ctrl.groupBy();
     const mySlider = m.component(slider, {
@@ -78,11 +78,11 @@ example.view = (ctrl) => {
                 onclick: () => sliderController.goNext()
             }, 'Next')
         ] : null);
-    return [
+    return m('div', [
         sliderControls,
         mySlider,
-        github()
-    ];
+        opts.hideGithub ? null : github()
+    ]);
 };
 
 export default example;

@@ -1,12 +1,12 @@
 [
-    "app/assets/images/01.jpg",
-	"app/assets/images/02.jpg",
-	"app/assets/images/03.jpg",
-	"app/assets/images/04.jpg",
-	"app/assets/images/05.jpg",
-	"app/assets/images/06.jpg",
-	"app/assets/images/07.jpg",
-	"app/assets/images/08.jpg",
-	"app/assets/images/09.jpg",
-	"app/assets/images/10.jpg"
+    "http://lorempixel.com/750/750/nature/1/",
+	"http://lorempixel.com/750/750/nature/2/",
+	"http://lorempixel.com/750/750/nature/3/",
+	"http://lorempixel.com/750/750/nature/4/",
+	"http://lorempixel.com/750/750/nature/5/",
+	"http://lorempixel.com/750/750/nature/6/",
+	"http://lorempixel.com/750/750/nature/7/",
+	"http://lorempixel.com/750/750/nature/8/",
+	"http://lorempixel.com/750/750/sports/9/",
+	"http://lorempixel.com/750/750/nature/10/"
 ]

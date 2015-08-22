@@ -28,15 +28,15 @@ const createPage = (opts) => {
 };
 
 let example = {};
-example.view = () => {
-    return [
+example.view = (ctrl, opts) => {
+    return m('div', [
         m.component(slider, {
 			pageData: common.getPageData,
             page: createPage,
             class: 'example images'
         }),
-        github()
-    ];
+        opts.hideGithub ? null : github()
+    ]);
 };
 
 export default example;

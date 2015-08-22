@@ -6,6 +6,7 @@ import vertical from 'app/vertical/vertical';
 import controls from 'app/controls/controls';
 import group from 'app/group/group';
 import pages from 'app/pages/pages';
+import multiple from 'app/multiple/multiple';
 import github from 'app/app/github';
 require('./index.css!');
 
@@ -34,6 +35,11 @@ const menuData = [
         href: '/pages',
         title: 'Page content',
         subtitle: 'More diverse content, lazily loaded.'
+    },
+    {
+        href: '/multiple',
+        title: 'Multiple',
+        subtitle: 'Multiple sliders on one page.'
     }
 ];
 
@@ -63,5 +69,6 @@ m.route(document.body, '/', {
     '/vertical': vertical,
     '/controls': controls,
     '/group': group,
-    '/pages': pages
+    '/pages': pages,
+    '/multiple': multiple
 });

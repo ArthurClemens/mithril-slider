@@ -29,16 +29,16 @@ const createPage = (opts) => {
 };
 
 let example = {};
-example.view = () => {
-    return [
+example.view = (ctrl, opts = {}) => {
+    return m('div', [
         m.component(slider, {
 			pageData: common.getPageData,
 			page: createPage,
 			class: 'example vertical',
             orientation: 'vertical'
         }),
-        github()
-    ];
+        opts.hideGithub ? null : github()
+    ]);
 };
 
 export default example;

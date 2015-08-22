@@ -8,6 +8,10 @@ import github from 'app/app/github';
 require('app/app/common.css!');
 require('./controls.css!');
 
+const callRight = (fn, ...args) =>
+    (...remainingArgs) =>
+        fn(...remainingArgs, ...args);
+
 const createPage = (opts) => {
     const currentIndex = opts.currentIndex;
     const listIndex = opts.listIndex;
@@ -35,10 +39,10 @@ example.controller = () => {
         isEditing: m.prop(false) // allow value change when typing
     };
 };
-example.view = (ctrl) => {
+example.view = (ctrl, opts) => {
     const sliderController = ctrl.sliderController();
     const mySlider = m.component(slider, {
-        pageData: common.getPageData,
+        pageData: callRight(common.getPageData, 'app/data/local.json'),
         page: createPage,
         sliderController: ctrl.sliderController,
         class: 'example controls'
@@ -64,11 +68,11 @@ example.view = (ctrl) => {
             onclick: () => sliderController.goNext()
         }, 'Next')
     ]) : null;
-    return [
+    return m('div', [
         mySlider,
         sliderControls,
-        github()
-    ];
+        opts.hideGithub ? null : github()
+    ]);
 };
 
 export default example;
