@@ -39,13 +39,15 @@ example.controller = () => {
         isEditing: m.prop(false) // allow value change when typing
     };
 };
-example.view = (ctrl, opts) => {
+example.view = (ctrl, opts = {}) => {
+    const rtl = opts.rtl;
     const sliderController = ctrl.sliderController();
     const mySlider = m.component(slider, {
         pageData: callRight(common.getPageData, 'app/data/local.json'),
         page: createPage,
         sliderController: ctrl.sliderController,
-        class: 'example controls'
+        class: 'example controls',
+        rtl: rtl
     });
     const sliderControls = sliderController ? m('.slider-controls.slider-controls-controls', [
         m('input.goto', {
@@ -68,7 +70,8 @@ example.view = (ctrl, opts) => {
             onclick: () => sliderController.goNext()
         }, 'Next')
     ]) : null;
-    return m('div', [
+    const props = rtl ? {dir: 'rtl'} : {};
+    return m('div', props, [
         mySlider,
         sliderControls,
         opts.hideGithub ? null : github()

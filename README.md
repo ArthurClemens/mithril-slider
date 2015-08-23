@@ -2,7 +2,7 @@
 
 Handles series of pageable content. This code is a Mithril component wrapper around [HammerJS](http://hammerjs.github.io/), with additional features.
 
-Version 0.1.4
+Version 0.2.0
 
 
 ## Features
@@ -12,6 +12,7 @@ Version 0.1.4
 * Pages can be grouped, for instance for series of thumbnails that are shown a group at a time.
 * Page content can be lazily loaded (see example code).
 * The slider can be controlled with next/previous buttons and queried for state.
+* Right-to-left language support, using mirrored transitions.
 
 
 ## Examples
@@ -175,6 +176,7 @@ With vertical orientation and `position: absolute`, the page must have a height.
 | **class** | optional | String |  | Extra CSS class appended to 'slider' |
 | **duration** | optional | Number | 250 | Default transition duration in ms (when not dragging); when dragging, duration is dependent on dragging velocity, this setting is the maximum duration for slow drags |
 | **orientation** | optional | String | 'horizontal' | Set to 'vertical' to create a vertically swiping page list |
+| **rtl** | optional | Boolean | `false` | Right-to-left language support (for instance Arabic and Hebrew); set to true to mirror transitions |
 | **groupBy** | optional | Number | | Number of items within a group | 
 | **before** | optional | Mithril template or component | | Content shown before the pages; has class `before` |
 | **after** | optional | Mithril template or component | | Content shown after the pages; has class `after` |

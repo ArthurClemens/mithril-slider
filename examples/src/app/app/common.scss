@@ -48,8 +48,15 @@ a:visited {
     }
     @for $i from 1 through 10 {
         .page:nth-child(#{$i}) {
+            $_pos: 1px * (($i - 1) * $size);
+
             top: 0;
-            left: 1px * (($i - 1) * $size);
+            left: $_pos;
+
+            [dir="rtl"] & {
+                left: auto;
+                right: $_pos;
+            }
         }
     }
 }

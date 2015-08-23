@@ -40,12 +40,27 @@
         }
     }
     a.prev {
-        left: 10px;
         background-image: url('../assets/svg/navigate-before.svg');
     }
     a.next {
-        right: 10px;
         background-image: url('../assets/svg/navigate-next.svg');
+    }
+
+    a.prev {
+        left: 10px;
+    }
+    [dir="rtl"] & a.prev {
+        left: auto;
+        right: 10px;
+        transform: scaleX(-1);
+    }
+    a.next {
+        right: 10px;
+    }
+    [dir="rtl"] & a.next {
+        right: auto;
+        left: 10px;
+        transform: scaleX(-1);
     }
 
     input.goto {

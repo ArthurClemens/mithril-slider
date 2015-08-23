@@ -4,6 +4,7 @@ import m from 'mithril';
 import images from 'app/images/images';
 import vertical from 'app/vertical/vertical';
 import controls from 'app/controls/controls';
+import ltr from 'app/ltr/ltr';
 import group from 'app/group/group';
 import pages from 'app/pages/pages';
 import multiple from 'app/multiple/multiple';
@@ -14,27 +15,32 @@ const menuData = [
     {
         href: '/images',
         title: 'Simple image swipe',
-        subtitle: 'Swiping a series of images, lazily loaded.'
+        subtitle: 'Swiping a series of images.'
     },
     {
         href: '/vertical',
         title: 'Vertical image swipe',
-        subtitle: 'Swiping a vertical series of images, lazily loaded.'
+        subtitle: 'Swiping a vertical series of images.'
     },
     {
         href: '/controls',
         title: 'Slider controls',
-        subtitle: 'Using controls to manage sliding and get feedback, lazily loaded.'
+        subtitle: 'Using controls to manage sliding and get feedback.'
+    },
+    {
+        href: '/ltr',
+        title: 'Left-to-right',
+        subtitle: 'Controls with left-to-right language support.'
     },
     {
         href: '/group',
         title: 'Dynamic groups',
-        subtitle: 'Creating dynamically sized pages, lazily loaded.'
+        subtitle: 'Creating dynamically sized pages.'
     },
     {
         href: '/pages',
         title: 'Page content',
-        subtitle: 'More diverse content, lazily loaded.'
+        subtitle: 'More diverse content.'
     },
     {
         href: '/multiple',
@@ -44,7 +50,7 @@ const menuData = [
 ];
 
 const menu = m('ul.menu', [
-    m('li.header', 'Examples'),
+    m('li.header', 'All examples are lazily loaded'),
     menuData.map(menuItem => {
         return m('li', m('a', {href: menuItem.href, config: m.route}, [
             m('span.title', menuItem.title),
@@ -68,6 +74,7 @@ m.route(document.body, '/', {
     '/images': images,
     '/vertical': vertical,
     '/controls': controls,
+    '/ltr': ltr,
     '/group': group,
     '/pages': pages,
     '/multiple': multiple
