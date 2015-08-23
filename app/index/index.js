@@ -1,5 +1,5 @@
 "bundle";
-System.registerDynamic("app/index/index", ["lib/mithril/mithril.min", "app/images/images", "app/vertical/vertical", "app/controls/controls", "app/group/group", "app/pages/pages", "app/multiple/multiple", "app/app/github", "app/index/index.css!lib/system-css/css"], true, function(require, exports, module) {
+System.registerDynamic("app/index/index", ["lib/mithril/mithril.min", "app/images/images", "app/vertical/vertical", "app/controls/controls", "app/ltr/ltr", "app/group/group", "app/pages/pages", "app/multiple/multiple", "app/app/github", "app/index/index.css!lib/system-css/css"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -16,6 +16,8 @@ System.registerDynamic("app/index/index", ["lib/mithril/mithril.min", "app/image
   var _appVerticalVertical2 = _interopRequireDefault(_appVerticalVertical);
   var _appControlsControls = require("app/controls/controls");
   var _appControlsControls2 = _interopRequireDefault(_appControlsControls);
+  var _appLtrLtr = require("app/ltr/ltr");
+  var _appLtrLtr2 = _interopRequireDefault(_appLtrLtr);
   var _appGroupGroup = require("app/group/group");
   var _appGroupGroup2 = _interopRequireDefault(_appGroupGroup);
   var _appPagesPages = require("app/pages/pages");
@@ -28,29 +30,33 @@ System.registerDynamic("app/index/index", ["lib/mithril/mithril.min", "app/image
   var menuData = [{
     href: "/images",
     title: "Simple image swipe",
-    subtitle: "Swiping a series of images, lazily loaded."
+    subtitle: "Swiping a series of images."
   }, {
     href: "/vertical",
     title: "Vertical image swipe",
-    subtitle: "Swiping a vertical series of images, lazily loaded."
+    subtitle: "Swiping a vertical series of images."
   }, {
     href: "/controls",
     title: "Slider controls",
-    subtitle: "Using controls to manage sliding and get feedback, lazily loaded."
+    subtitle: "Using controls to manage sliding and get feedback."
+  }, {
+    href: "/ltr",
+    title: "Left-to-right",
+    subtitle: "Controls with left-to-right language support."
   }, {
     href: "/group",
     title: "Dynamic groups",
-    subtitle: "Creating dynamically sized pages, lazily loaded."
+    subtitle: "Creating dynamically sized pages."
   }, {
     href: "/pages",
     title: "Page content",
-    subtitle: "More diverse content, lazily loaded."
+    subtitle: "More diverse content."
   }, {
     href: "/multiple",
     title: "Multiple",
     subtitle: "Multiple sliders on one page."
   }];
-  var menu = (0, _mithril2["default"])("ul.menu", [(0, _mithril2["default"])("li.header", "Examples"), menuData.map(function(menuItem) {
+  var menu = (0, _mithril2["default"])("ul.menu", [(0, _mithril2["default"])("li.header", "All examples are lazily loaded"), menuData.map(function(menuItem) {
     return (0, _mithril2["default"])("li", (0, _mithril2["default"])("a", {
       href: menuItem.href,
       config: _mithril2["default"].route
@@ -66,6 +72,7 @@ System.registerDynamic("app/index/index", ["lib/mithril/mithril.min", "app/image
     "/images": _appImagesImages2["default"],
     "/vertical": _appVerticalVertical2["default"],
     "/controls": _appControlsControls2["default"],
+    "/ltr": _appLtrLtr2["default"],
     "/group": _appGroupGroup2["default"],
     "/pages": _appPagesPages2["default"],
     "/multiple": _appMultipleMultiple2["default"]
@@ -962,13 +969,16 @@ System.registerDynamic("app/controls/controls", ["lib/mithril/mithril.min", "lib
       isEditing: _mithril2["default"].prop(false)
     };
   };
-  example.view = function(ctrl, opts) {
+  example.view = function(ctrl) {
+    var opts = arguments[1] === undefined ? {} : arguments[1];
+    var rtl = opts.rtl;
     var sliderController = ctrl.sliderController();
     var mySlider = _mithril2["default"].component(_mithrilSlider2["default"], {
       pageData: callRight(_appAppCommon2["default"].getPageData, "app/data/local.json"),
       page: createPage,
       sliderController: ctrl.sliderController,
-      "class": "example controls"
+      "class": "example controls",
+      rtl: rtl
     });
     var sliderControls = sliderController ? (0, _mithril2["default"])(".slider-controls.slider-controls-controls", [(0, _mithril2["default"])("input.goto", {
       value: ctrl.isEditing() ? "" : sliderController.index(),
@@ -991,7 +1001,32 @@ System.registerDynamic("app/controls/controls", ["lib/mithril/mithril.min", "lib
         return sliderController.goNext();
       }
     }, "Next")]) : null;
-    return (0, _mithril2["default"])("div", [mySlider, sliderControls, opts.hideGithub ? null : (0, _appAppGithub2["default"])()]);
+    var props = rtl ? {dir: "rtl"} : {};
+    return (0, _mithril2["default"])("div", props, [mySlider, sliderControls, opts.hideGithub ? null : (0, _appAppGithub2["default"])()]);
+  };
+  exports["default"] = example;
+  module.exports = exports["default"];
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("app/ltr/ltr", ["lib/mithril/mithril.min", "app/controls/controls"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  "use strict";
+  Object.defineProperty(exports, "__esModule", {value: true});
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {"default": obj};
+  }
+  var _mithril = require("lib/mithril/mithril.min");
+  var _mithril2 = _interopRequireDefault(_mithril);
+  var _appControlsControls = require("app/controls/controls");
+  var _appControlsControls2 = _interopRequireDefault(_appControlsControls);
+  var example = {};
+  example.view = function() {
+    return _mithril2["default"].component(_appControlsControls2["default"], {rtl: true});
   };
   exports["default"] = example;
   module.exports = exports["default"];
@@ -1205,7 +1240,7 @@ System.registerDynamic("app/app/github", ["lib/mithril/mithril.min", "app/app/gi
   require("app/app/github.css!lib/system-css/css");
   var content = function content() {
     var opts = arguments[0] === undefined ? {} : arguments[0];
-    return (0, _mithril2["default"])(".github", [!opts.home ? (0, _mithril2["default"])("a", {
+    return (0, _mithril2["default"])(".github", {dir: "ltr"}, [!opts.home ? (0, _mithril2["default"])("a", {
       href: "/",
       config: _mithril2["default"].route
     }, "All examples") : null, (0, _mithril2["default"])("hr"), _mithril2["default"].trust('mithril-slider, Content Slider for Mithril on mobile and desktop. Project page on <a href="https://github.com/ArthurClemens/mithril-slider">Github</a>.')]);
@@ -1280,6 +1315,7 @@ System.registerDynamic("lib/mithril-slider/mithril-slider", ["lib/mithril/mithri
     var groupBy = _mithril2["default"].prop(opts.groupBy || 1);
     var cancelDragFactor = opts.cancelDragFactor || 1 / 5;
     var isVertical = opts.orientation === "vertical";
+    var dir = opts.rtl ? -1 : 1;
     var setIndex = function setIndex(idx) {
       index(idx);
       _mithril2["default"].redraw();
@@ -1306,7 +1342,7 @@ System.registerDynamic("lib/mithril-slider/mithril-slider", ["lib/mithril/mithri
       if (duration !== undefined) {
         setTransitionDurationStyle(duration);
       }
-      setTransitionStyle(contentEl(), -1 * idx * pageSize);
+      setTransitionStyle(contentEl(), -dir * idx * pageSize);
       setIndex(idx);
     };
     var normalizedStep = function normalizedStep(orientation) {
@@ -1361,7 +1397,7 @@ System.registerDynamic("lib/mithril-slider/mithril-slider", ["lib/mithril/mithri
       var el = contentEl();
       var page = getPageEl(el, index());
       var delta = isVertical ? e.deltaY : e.deltaX;
-      var origin = isVertical ? page.offsetTop : page.offsetLeft;
+      var origin = isVertical ? page.offsetTop : dir === -1 ? page.offsetLeft - page.parentNode.clientWidth + page.clientWidth : page.offsetLeft;
       setTransitionStyle(el, delta - origin);
       e.preventDefault();
     };
@@ -1380,7 +1416,7 @@ System.registerDynamic("lib/mithril-slider/mithril-slider", ["lib/mithril/mithri
       var duration = calculateTransitionDuration(e.velocity);
       var delta = isVertical ? e.deltaY : e.deltaX;
       if (Math.abs(delta) > pageSize * groupBy() * cancelDragFactor) {
-        if (delta < 0) {
+        if (dir * delta < 0) {
           goNext(duration);
         } else {
           goPrev(duration);
