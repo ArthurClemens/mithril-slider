@@ -1,15 +1,19 @@
-'use strict';
-
+import 'app/app/no-tap-delay';
 import m from 'mithril';
+import styler from 'app/app/styler';
+import commonStyle from 'app/app/common-style';
+import indexStyle from './index-style';
+styler.add('common', commonStyle);
+styler.add('index', indexStyle);
+
 import images from 'app/images/images';
 import vertical from 'app/vertical/vertical';
 import controls from 'app/controls/controls';
 import ltr from 'app/ltr/ltr';
 import group from 'app/group/group';
-import pages from 'app/pages/pages';
+// import pages from 'app/pages/pages';
 import multiple from 'app/multiple/multiple';
 import github from 'app/app/github';
-require('./index.css!');
 
 const menuData = [
     {
@@ -37,11 +41,11 @@ const menuData = [
         title: 'Dynamic groups',
         subtitle: 'Creating dynamically sized pages.'
     },
-    {
-        href: '/pages',
-        title: 'Page content',
-        subtitle: 'More diverse content.'
-    },
+    // {
+    //     href: '/pages',
+    //     title: 'Page content',
+    //     subtitle: 'More diverse content.'
+    // },
     {
         href: '/multiple',
         title: 'Multiple',
@@ -50,7 +54,7 @@ const menuData = [
 ];
 
 const menu = m('ul.menu', [
-    m('li.header', 'All examples are lazily loaded'),
+    m('li.header', 'Examples'),
     menuData.map(menuItem => {
         return m('li', m('a', {href: menuItem.href, config: m.route}, [
             m('span.title', menuItem.title),
@@ -61,7 +65,7 @@ const menu = m('ul.menu', [
 
 let app = {};
 app.view = () => {
-    return m('div', [
+    return m('.index', [
         m('h1', 'Content Slider for Mithril'),
         menu,
         github({home: true})
@@ -76,6 +80,6 @@ m.route(document.body, '/', {
     '/controls': controls,
     '/ltr': ltr,
     '/group': group,
-    '/pages': pages,
+    //'/pages': pages,
     '/multiple': multiple
 });

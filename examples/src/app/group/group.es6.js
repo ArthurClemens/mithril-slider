@@ -1,12 +1,11 @@
-'use strict';
-
 import m from 'mithril';
 import slider from 'mithril-slider';
 import common from 'app/app/common';
 import preloader from 'app/preloader/preloader';
 import github from 'app/app/github';
-require('app/app/common.css!');
-require('./group.css!');
+import styler from 'app/app/styler';
+import style from './group-style';
+styler.add('group', style);
 
 const callRight = (fn, ...args) =>
     (...remainingArgs) =>
@@ -29,11 +28,11 @@ const createPage = (opts, ctrl) => {
                     common.fadeInImage(el, data);
                 }
             }),
-            m('span', listIndex),
+            m('span', listIndex + 1),
             preloader
         ])
     ] : null;
-    return m('.page', content);
+    return m('.page', {key: listIndex}, content);
 };
 
 let example = {};
@@ -81,6 +80,7 @@ example.view = (ctrl, opts) => {
     return m('div', [
         sliderControls,
         mySlider,
+        m('.slider-placeholder'),
         opts.hideGithub ? null : github()
     ]);
 };

@@ -1,5 +1,3 @@
-'use strict';
-
 import m from 'mithril';
 import controls from 'app/controls/controls';
 

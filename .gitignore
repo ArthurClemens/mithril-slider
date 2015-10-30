@@ -1,6 +1,6 @@
-.sass-cache
 node_modules
-build
-examples/src/lib
-lib/build
-lib/src/lib
+.DS_Store
+tmp
+tmp-npm
+
+examples/build/app/index/index-bundle.js

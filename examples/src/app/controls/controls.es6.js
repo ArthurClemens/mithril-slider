@@ -1,12 +1,11 @@
-'use strict';
-
 import m from 'mithril';
 import slider from 'mithril-slider';
 import common from 'app/app/common';
 import preloader from 'app/preloader/preloader';
 import github from 'app/app/github';
-require('app/app/common.css!');
-require('./controls.css!');
+import styler from 'app/app/styler';
+import style from './controls-style';
+styler.add('controls', style);
 
 const callRight = (fn, ...args) =>
     (...remainingArgs) =>
@@ -29,7 +28,7 @@ const createPage = (opts) => {
         }),
         preloader
     ]) : null;
-    return m('.page', content);
+    return m('.page', {key: listIndex}, content);
 };
 
 let example = {};
@@ -51,10 +50,10 @@ example.view = (ctrl, opts = {}) => {
     });
     const sliderControls = sliderController ? m('.slider-controls.slider-controls-controls', [
         m('input.goto', {
-            value: ctrl.isEditing() ? '' : sliderController.index(),
+            value: ctrl.isEditing() ? '' : sliderController.index() + 1,
             oninput: (e) => {
                 ctrl.isEditing(true);
-                const idx = parseInt(e.target.value, 10);
+                const idx = parseInt(e.target.value, 10) - 1;
                 if (!isNaN(idx)) {
                     sliderController.goTo(idx, 0);
                     ctrl.isEditing(false);
@@ -73,6 +72,7 @@ example.view = (ctrl, opts = {}) => {
     const props = rtl ? {dir: 'rtl'} : {};
     return m('div', props, [
         mySlider,
+        m('.slider-placeholder'),
         sliderControls,
         opts.hideGithub ? null : github()
     ]);

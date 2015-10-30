@@ -1,9 +1,6 @@
-'use strict';
-
 import m from 'mithril';
 
 const DATA_URL = 'app/data/server.json';
-//const DATA_URL = 'app/data/local.json';
 
 const vm = {
     seen: {}
@@ -18,11 +15,16 @@ export default {
         });
     },
 
-    fadeInImage: (el, url) => {
+    fadeInImage: (el, url, callback) => {
         const showImage = () => {
             el.style.backgroundImage = 'url(' + url + ')';
             el.style.opacity = 1;
             vm.seen[url] = 1;
+            if (callback) {
+                setTimeout(() => {
+                    callback();
+                }, 500);
+            }
         };
         if (!vm.seen[url]) {
             let img = new Image();

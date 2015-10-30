@@ -1,18 +1,17 @@
-'use strict';
-
 import m from 'mithril';
 import slider from 'mithril-slider';
 import common from 'app/app/common';
 import preloader from 'app/preloader/preloader';
-require('app/app/common.css!');
-require('./pages.css!');
+import styler from 'app/app/styler';
+import style from './pages-style';
+styler.add('pages', style);
 
 const dummyText = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
 const DATA_URL = 'app/pages/data.json';
 
 const callRight = (fn, ...args) =>
     (...remainingArgs) =>
-        fn(...remainingArgs, ...args);
+    fn(...remainingArgs, ...args);
 
 const createPage = (opts) => {
     const currentIndex = opts.currentIndex;
@@ -20,9 +19,9 @@ const createPage = (opts) => {
     const data = opts.data;
     const inRange = Math.abs(currentIndex - listIndex) < 2;
     const content = inRange ?
-        m('.article', [
-            m('.image-container',
-                [
+        m('.page-content',
+            m('.article', [
+                m('.image-container', [
                     m('.image', {
                         config: (el, inited) => {
                             if (inited) {
@@ -32,20 +31,21 @@ const createPage = (opts) => {
                         }
                     }),
                     preloader
-                ]
-            ),
-            m('.article-content', [
-                m('.title', data.title),
-                m('p', dummyText)
-            ])
-        ]) : null;
-    return m('.page', content);
+                ]),
+                m('.article-content', [
+                    m('.title', data.title),
+                    m('p', dummyText)
+                ])
+            ])) : null;
+    return m('.page', {
+        key: listIndex
+    }, content);
 };
 
 let example = {};
 example.view = () => {
     return m.component(slider, {
-		pageData: callRight(common.getPageData, DATA_URL),
+        pageData: callRight(common.getPageData, DATA_URL),
         page: createPage,
         class: 'example pages'
     });
