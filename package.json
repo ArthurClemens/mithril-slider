@@ -1,6 +1,6 @@
 {
   "name": "mithril-slider",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Content Slider for Mithril on mobile and desktop",
   "main": "lib/mithril-slider.js",
   "scripts": {
@@ -9,9 +9,13 @@
     "standalone-css": "node scripts/create-standalone-css.js > lib/mithril-slider.css",
     "github": "node scripts/github.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "hammerjs": "^2.0.6"
+  },
   "devDependencies": {
     "babel": "^5.8.23",
+    "babel-plugin-add-module-exports": "^0.1.2",
+    "babel-preset-es2015": "^6.5.0",
     "j2c": "^0.7.3",
     "mithril": "^0.2.0",
     "shelljs": "^0.5.3",

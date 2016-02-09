@@ -12,7 +12,7 @@ function bundle(entries, outfile) {
             './node_modules/mithril-slider/lib/' // include mithril-slider-style.js
         ]
     })
-    .transform(babelify)
+    .transform(babelify, {presets: ['es2015']})
     .transform({
         global: true
     }, 'uglifyify')
