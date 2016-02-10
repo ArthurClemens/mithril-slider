@@ -34,24 +34,30 @@ For working with the examples, see [Viewing the examples](#viewing-the-examples)
 
 ## Usage
 
-	import slider from 'mithril-slider';
+~~~javascript
+import slider from 'mithril-slider';
+~~~
 
 Call the slider as component, with (at least) parameters `pageData` and `page`:
 
-    m.component(slider, {
-		pageData: getPageData,
-        page: createPage
-    })
+~~~javascript
+m.component(slider, {
+	pageData: getPageData,
+    page: createPage
+})
+~~~
 
 For parameter `pageData`, create a function to fetch page data:
 
-	const getPageData = () => {
-	    return m.request({
-	        method: 'GET',
-	        url: 'app/data/images.json',
-	        background: false
-	    });
-	};
+~~~javascript
+const getPageData = () => {
+    return m.request({
+        method: 'GET',
+        url: 'app/data/images.json',
+        background: false
+    });
+};
+~~~
 
 The function needs to return a promise (which `m.request` does).
 
@@ -75,14 +81,16 @@ or
 
 For parameter `page`, create a function that returns a Mithril object for each single list item:
 
-	const createPage = (opts) => {
-		const data = opts.data;
-	    return m('.page', {
-			style: {
-				'background-image': 'url(' + data + ')'
-			}
-	    });
-	};
+~~~javascript
+const createPage = (opts) => {
+	const data = opts.data;
+    return m('.page', {
+		style: {
+			'background-image': 'url(' + data + ')'
+		}
+    });
+};
+~~~
 
 This function will be called for all list items.
 
@@ -93,30 +101,33 @@ The `createPage` function is called for all items in the list, so in the current
 
 We can optimize this by only loading the current, next and previous image:
 
-	const createPage = (opts) => {
-		const currentIndex = opts.currentIndex;
-		const listIndex = opts.listIndex;
-		const data = opts.data;
-	    const style = (Math.abs(currentIndex - listIndex) < 2)
-	        ? {
-	              'background-image': 'url(' + data + ')'
-	          }
-	        : {};
-	    return m('.page', {
-	        style: style
-	    });
-	};
-
+~~~javascript
+const createPage = (opts) => {
+	const currentIndex = opts.currentIndex;
+	const listIndex = opts.listIndex;
+	const data = opts.data;
+    const style = (Math.abs(currentIndex - listIndex) < 2)
+        ? {
+              'background-image': 'url(' + data + ')'
+          }
+        : {};
+    return m('.page', {
+        style: style
+    });
+};
+~~~
 
 ### Sliding multiple pages
 
 When showing more than one "page", for instance a series of thumbnails, simply use parameter `groupBy`:
 
-	const mySlider = m.component(slider, {
-	    pageData: getPageData,
-	    page: createPage,
-	    groupBy: 3
-	});
+~~~javascript
+const mySlider = m.component(slider, {
+    pageData: getPageData,
+    page: createPage,
+    groupBy: 3
+});
+~~~
 
 For responsive interfaces, the number of pages within a group should be set dynamically (for instance divide the window width by the number of items to show).
 
@@ -126,37 +137,39 @@ Use CSS to set the proper page size for each element.
 
 
 
-
 ### Accessing the slider directly
 
 The above example is fine for simply interacting with the slider (swiping/dragging). For more advanced functionality - for instance to conditionally show next/previous buttons - we need to access the slider instance.
 
 By passing parameter `sliderController`, we can get a reference to the slider controller. The parameter is actually a function reference, and we can use `m.prop` to store the controller for later reference:
 
-	let app = {};
-	app.controller = () => {
-	    return {
-	        sliderController: m.prop()
-	    };
-	};
-	app.view = (ctrl) => {
-	    const mySlider = m.component(slider, {
-	        pageData: getPageData,
-	        page: page,
-	        sliderController: ctrl.sliderController,
-	        ...
-	    });
-		...
-	};
+~~~javascript
+const app = {};
+app.controller = () => {
+    return {
+        sliderController: m.prop()
+    };
+};
+app.view = (ctrl) => {
+    const mySlider = m.component(slider, {
+        pageData: getPageData,
+        page: page,
+        sliderController: ctrl.sliderController,
+        ...
+    });
+	...
+};
+~~~
 
 Now we can access slider controller methods:
 
-	const sliderController = ctrl.sliderController();
-	const button = sliderController ? m('a.next', {
-        class: sliderController.hasNext() ? 'enabled' : '',
-        onclick: () => sliderController.goNext()
-    }, 'Next') : null;
-
+~~~javascript
+const sliderController = ctrl.sliderController();
+const button = sliderController ? m('a.next', {
+    class: sliderController.hasNext() ? 'enabled' : '',
+    onclick: () => sliderController.goNext()
+}, 'Next') : null;
+~~~
 
 
 ### Styling
@@ -172,13 +185,16 @@ Mithril Slider comes with a JavaScript based styling that uses [j2c](https://git
 
 The j2c way goes like this. In your application file:
 
-    import style from 'mithril-slider-style';
+~~~javascript
+import style from 'mithril-slider-style';
+~~~
 
 The examples app dir contains a convenience function to add the styles to the document head:
 
-    import styler from 'app/app/styler';
-    styler.add('mithril-slider', style);
-
+~~~javascript
+import styler from 'app/app/styler';
+styler.add('mithril-slider', style);
+~~~
 
 
 ### Configuration parameters
@@ -197,6 +213,7 @@ The examples app dir contains a convenience function to add the styles to the do
 | **after** | optional | Mithril template or component | | Content shown after the pages; has class `after` |
 | **index** | optional | Number | 0 | Starting page index |
 | **cancelDragFactor** | optional | Number | 1/5 | Fraction of page width below which the transition is cancelled |
+| **getState**  | optional | Function(state {Object}) | | Callback function that accepts the slider state (Object with properties `index` {Number}, `hasNext` {Booleam}, `hasPrevious` {Boolean}, `pageEl` {HTMLElement}) |
 
 
 ### Slider controller methods

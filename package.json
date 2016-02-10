@@ -1,6 +1,6 @@
 {
   "name": "mithril-slider",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Content Slider for Mithril on mobile and desktop",
   "main": "lib/mithril-slider.js",
   "scripts": {
