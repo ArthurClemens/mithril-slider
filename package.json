@@ -1,6 +1,6 @@
 {
   "name": "mithril-slider",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Content Slider for Mithril on mobile and desktop",
   "main": "lib/mithril-slider.js",
   "scripts": {
@@ -14,13 +14,15 @@
   },
   "devDependencies": {
     "babel": "^5.8.23",
+    "babel-cli": "^6.6.5",
     "babel-plugin-add-module-exports": "^0.1.2",
     "babel-preset-es2015": "^6.5.0",
     "j2c": "^0.7.3",
     "mithril": "^0.2.0",
+    "mithril-objectify": "^2.0.0",
     "shelljs": "^0.5.3",
     "transpile-watch": "0.0.2",
-    "uglify-js": "^2.4.24",
+    "uglify-js": "^2.6.2",
     "uglifyjs": "^2.4.10"
   },
   "keywords": [

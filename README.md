@@ -205,7 +205,7 @@ styler.add('mithril-slider', style);
 | **pageData** | required | Function :: () => Promise | | Function that fetches a list of page data; should return a promise; after resolving `m.redraw` is called |
 | **sliderController** | optional | Function :: () => Function | | Receives the slider controller function |
 | **class** | optional | String |  | Extra CSS class appended to 'slider' |
-| **duration** | optional | Number | 250 | Default transition duration in ms (when not dragging); when dragging, duration is dependent on dragging velocity, this setting is the maximum duration for slow drags |
+| **duration** | optional | Number | 200 | Default transition duration in ms (when not dragging); when dragging, duration is dependent on dragging velocity, this setting is the maximum duration for slow drags |
 | **orientation** | optional | String | 'horizontal' | Set to 'vertical' to create a vertically swiping page list |
 | **rtl** | optional | Boolean | `false` | Right-to-left language support (for instance Arabic and Hebrew); set to true to mirror transitions |
 | **groupBy** | optional | Number | | Number of items within a group |
