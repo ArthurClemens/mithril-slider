@@ -11,7 +11,7 @@ import vertical from 'app/vertical/vertical';
 import controls from 'app/controls/controls';
 import ltr from 'app/ltr/ltr';
 import group from 'app/group/group';
-// import pages from 'app/pages/pages';
+import pages from 'app/pages/pages';
 import multiple from 'app/multiple/multiple';
 import github from 'app/app/github';
 
@@ -41,6 +41,7 @@ const menuData = [
         title: 'Dynamic groups',
         subtitle: 'Creating dynamically sized pages.'
     },
+    /* Pages is not ready for prime time */
     // {
     //     href: '/pages',
     //     title: 'Page content',
@@ -80,6 +81,6 @@ m.route(document.body, '/', {
     '/controls': controls,
     '/ltr': ltr,
     '/group': group,
-    //'/pages': pages,
+    '/pages': pages,
     '/multiple': multiple
 });
