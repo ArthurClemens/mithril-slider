@@ -17,12 +17,14 @@
     "babel-cli": "^6.6.5",
     "babel-plugin-add-module-exports": "^0.1.2",
     "babel-preset-es2015": "^6.5.0",
+    "findup-sync": "^0.4.2",
     "j2c": "^0.7.3",
     "mithril": "^0.2.0",
-    "mithril-objectify": "^2.0.0",
+    "mithril-objectify": "^2.2.5",
     "shelljs": "^0.5.3",
     "transpile-watch": "0.0.2",
     "uglify-js": "^2.6.2",
+    "uglifyify": "^3.0.1",
     "uglifyjs": "^2.4.10"
   },
   "keywords": [
