@@ -13,7 +13,7 @@
     "hammerjs": "^2.0.8",
     "j2c": "^0.11.2",
     "mithril": "^0.2.5",
-    "mithril-slider": "^0.3.5"
+    "mithril-slider": "^0.3.6"
   },
   "devDependencies": {
     "babel-cli": "^6.14.0",
