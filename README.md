@@ -206,7 +206,7 @@ styler.add('mithril-slider', style);
 | **sliderController** | optional | Function :: () => Function | | Receives the slider controller function |
 | **class** | optional | String |  | Extra CSS class appended to 'slider' |
 | **duration** | optional | Number | 200 | Default transition duration in ms (when not dragging); when dragging, duration is dependent on dragging velocity, this setting is the maximum duration for slow drags |
-| **orientation** | optional | String | 'horizontal' | Set to 'vertical' to create a vertically swiping page list |
+| **orientation** | optional | String | 'horizontal' | Either 'horizontal', 'vertical' or 'all'; translates to HammerJS's `direction` |
 | **rtl** | optional | Boolean | `false` | Right-to-left language support (for instance Arabic and Hebrew); set to true to mirror transitions |
 | **groupBy** | optional | Number | | Number of items within a group |
 | **before** | optional | Mithril template or component | | Content shown before the pages; has class `before` |

@@ -3,7 +3,6 @@ import Hammer from 'hammerjs';
 
 const createView = (ctrl, opts) => {
     const contentEl = ctrl.contentEl();
-    const list = ctrl.list();
     const currentIndex = ctrl.index();
     // sizes need to be set each redraw because of screen resizes
     ctrl.groupBy(opts.groupBy || 1);
@@ -20,7 +19,11 @@ const createView = (ctrl, opts) => {
             ctrl.setContentEl(el);
             const mc = new Hammer.Manager(el, {});
             mc.add(new Hammer.Pan({
-                direction: (opts.orientation === 'vertical') ? Hammer.DIRECTION_VERTICAL : Hammer.DIRECTION_HORIZONTAL,
+                direction: opts.orientation === 'vertical'
+                    ? Hammer.DIRECTION_VERTICAL
+                    : opts.orientation === 'all'
+                        ? Hammer.DIRECTION_ALL
+                        : Hammer.DIRECTION_HORIZONTAL,
                 threshold: 0
             }));
             mc.on('panmove', ctrl.handleDrag);
@@ -32,13 +35,16 @@ const createView = (ctrl, opts) => {
                 mc.off('panstart', ctrl.handleDragStart);
             };
         }
-    }, list.map((data, listIndex) => {
+    },
+    ctrl.list().map((data, listIndex) => {
         return opts.page({
             data: data,
             listIndex: listIndex,
             currentIndex: currentIndex
         });
-    })), opts.after ? m('.after', opts.after) : null);
+    })
+    ),
+    opts.after ? m('.after', opts.after) : null);
 };
 
 const slider = {};
@@ -47,7 +53,7 @@ slider.controller = (opts = {}) => {
     const defaultDuration = parseInt(opts.duration, 10) || 160;
     const index = m.prop(opts.index || -1);
     const list = opts.pageData();
-    list.then(m.redraw);
+    list.then(() => m.redraw());
     const contentEl = m.prop();
     let pageSize = 0;
     const groupBy = m.prop(opts.groupBy || 1);
@@ -136,7 +142,7 @@ slider.controller = (opts = {}) => {
         index() < list().length ? goTo(normalizedStep(1)) : goTo(normalizedStep(0))
     );
 
-    const goPrev = (duration = defaultDuration) => (
+    const goPrevious = (duration = defaultDuration) => (
         setTransitionDurationStyle(duration),
         index() > 0 ? goTo(normalizedStep(-1)) : goTo(normalizedStep(0))
     );
@@ -183,7 +189,7 @@ slider.controller = (opts = {}) => {
             if (dir * delta < 0) {
                 goNext(duration);
             } else {
-                goPrev(duration);
+                goPrevious(duration);
             }
         } else {
             goCurrent(duration);
@@ -192,23 +198,23 @@ slider.controller = (opts = {}) => {
 
     return {
         // component methods
-        list: list,
-        contentEl: contentEl,
-        setContentEl: setContentEl,
-        handleDrag: handleDrag,
-        handleDragStart: handleDragStart,
-        handleDragEnd: handleDragEnd,
-        groupBy: groupBy,
-        updateContentSize: updateContentSize,
+        list,
+        contentEl,
+        setContentEl,
+        handleDrag,
+        handleDragStart,
+        handleDragEnd,
+        groupBy,
+        updateContentSize,
 
         // public interface
-        index: index,
-        hasNext: hasNext,
-        hasPrevious: hasPrevious,
-        goTo: goTo,
-        goCurrent: goCurrent,
-        goNext: goNext,
-        goPrevious: goPrev
+        index,
+        hasNext,
+        hasPrevious,
+        goTo,
+        goCurrent,
+        goNext,
+        goPrevious
     };
 };
 
