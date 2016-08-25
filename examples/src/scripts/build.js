@@ -5,7 +5,7 @@ var babelify = require('babelify');
 function bundle(entries, outfile) {
     browserify({
         entries: entries,
-        extensions: ['.es6.js'],
+        extensions: ['.es6'],
         paths: [
             '.',
             './node_modules',
@@ -24,5 +24,5 @@ function bundle(entries, outfile) {
 }
 
 bundle([
-    'app/index/index.es6.js',
+    'app/index/index.es6',
 ], '../build/app/index/index-bundle.js');

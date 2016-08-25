@@ -8,9 +8,10 @@ styler.add('github', style);
 let content = (opts = {}) => {
     return m('.github', {
         dir: 'ltr'
-    }, [!opts.home ? m('a', {
-            href: 'index.html',
-            config: null
+    }, [
+        !opts.home ? m('a', {
+            href: '/',
+            config: m.route
         }, 'All examples') : null,
         m('hr'),
         m.trust('mithril-slider, content slider for Mithril on mobile and desktop. Project page on <a href="https://github.com/ArthurClemens/mithril-slider">Github</a>.')
