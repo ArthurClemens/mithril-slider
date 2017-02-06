@@ -5,8 +5,9 @@
   "main": "dist/js/examples.js",
   "module": "dist/js/examples.mjs",
   "scripts": {
-    "build": "DEPS=1 ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.umd.js && ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.es.js",
-    "watch": "DEPS=1 PORT=8080 WATCH_DIR=./dist/ ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.watch.js --watch"
+    "build": "PACKAGE=mithril-slider node ../../scripts/copy-package.js && DEPS=1 ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.umd.js && ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.es.js",
+    "watch": "PACKAGE=mithril-slider node ../../scripts/copy-package.js && DEPS=1 PORT=8080 WATCH_DIR=./dist/ ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.watch.js --watch",
+    "restore": "PACKAGE=mithril-slider node ../../scripts/copy-package-cleanup.js"
   },
   "dependencies": {
     "fastclick": "^1.0.6",
@@ -17,5 +18,8 @@
   },
   "repository": {},
   "author": "",
-  "license": ""
+  "license": "",
+  "devDependencies": {
+    "mithril-slider": "^0.4.0"
+  }
 }
