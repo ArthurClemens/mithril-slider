@@ -1,5 +1,5 @@
 import m from "mithril";
-import slider from "mithril-slider";
+import { slider } from "mithril-slider";
 import { getPageData, fadeInImage } from "../app/common";
 import preloader from "../preloader";
 import { addStyle } from "../app/styler";
@@ -45,7 +45,7 @@ const page = opts => {
 
 let example = {};
 example.view = () => {
-  return m.component(slider, {
+  return m(slider, {
     pageData: callRight(getPageData, DATA_URL),
     page,
     class: "example pages"

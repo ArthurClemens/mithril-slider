@@ -1,5 +1,5 @@
 import m from "mithril";
-import slider from "mithril-slider";
+import { slider } from "mithril-slider";
 import { getPageData, fadeInImage } from "../app/common";
 import preloader from "../preloader";
 import footer from "../app/footer";
@@ -39,7 +39,7 @@ const page = opts => {
 export default {
   view: (ctrl, opts) =>
     m("div", [
-      m.component(slider, {
+      m(slider, {
         pageData: getPageData,
         page,
         class: "example images"

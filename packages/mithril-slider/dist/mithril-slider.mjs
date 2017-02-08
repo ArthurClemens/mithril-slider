@@ -1,7 +1,5 @@
 import m from 'mithril';
 import Hammer from 'hammerjs';
-import { prefixPlugin } from 'j2c-plugin-prefix-browser';
-import J2c from 'j2c';
 
 var classes = {
   slider: "slider",
@@ -9,59 +7,6 @@ var classes = {
   before: "before",
   after: "after"
 };
-
-var j2c = new J2c(prefixPlugin);
-
-/*
- * @param id: identifier, used as HTMLElement id for the attached <style></style> element
- * @param styles: list of lists style Objects
- */
-var addStyle = function addStyle(id) {
-  for (var _len = arguments.length, styles = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    styles[_key - 1] = arguments[_key];
-  }
-
-  removeStyle(id);
-  var styleEl = document.createElement("style");
-  if (id) {
-    styleEl.setAttribute("id", id);
-  }
-  styles.forEach(function (styleList) {
-    // each style returns a list
-    if (Object.keys(styleList).length) {
-      styleList.forEach(function (style) {
-        var scoped = { "@global": style };
-        var sheet = j2c.sheet(scoped);
-        styleEl.appendChild(document.createTextNode(sheet));
-      });
-    }
-  });
-  document.head.appendChild(styleEl);
-};
-
-var removeStyle = function removeStyle(id) {
-  if (id) {
-    var old = document.getElementById(id);
-    if (old) {
-      old.parentNode.removeChild(old);
-    }
-  }
-};
-
-var styles = [{
-  ".slider": {
-    overflow: "hidden",
-
-    " .content": {
-      transitionProperty: "transform",
-      transitionTimingFunction: "ease-out",
-      // transition-duration set in js
-      transform: "translate3d(0, 0, 0)"
-    }
-  }
-}];
-
-addStyle("mithril-slider", styles);
 
 var view = function view(ctrl, opts) {
   if (opts.sliderController) {
@@ -299,7 +244,6 @@ var controller = function controller() {
     handleDragEnd: handleDragEnd,
     groupBy: groupBy,
     updateContentSize: updateContentSize,
-    // registerPage,
 
     // public interface
     index: index,
@@ -312,9 +256,22 @@ var controller = function controller() {
   };
 };
 
-var slider$1 = {
+var slider = {
   controller: controller,
   view: view
 };
 
-export default slider$1;
+var css = [{
+  ".slider": {
+    overflow: "hidden",
+
+    " .content": {
+      transitionProperty: "transform",
+      transitionTimingFunction: "ease-out",
+      // transition-duration set in js
+      transform: "translate3d(0, 0, 0)"
+    }
+  }
+}];
+
+export { slider, css };

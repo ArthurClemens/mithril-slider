@@ -1,9 +1,12 @@
 import "../app/no-tap-delay";
 import m from "mithril";
+import { css } from "mithril-slider";
+
 import { addStyle } from "../app/styler";
 import appStyle from "../app/style";
 import indexStyle from "./style";
 import footer from "../app/footer";
+addStyle("slider", css);
 addStyle("slider-examples-app", appStyle);
 addStyle("slider-examples-index", indexStyle);
 
@@ -80,15 +83,16 @@ const menu = m("ul.menu",
   ]
 );
 
-let app = {};
-app.view = () =>
-  m(".index",
-    [
-      m("h1", "Content Slider for Mithril"),
-      menu,
-      footer({ home: true })
-    ]
-  );
+const app = {
+  view: () =>
+    m(".index",
+      [
+        m("h1", "Content Slider for Mithril"),
+        menu,
+        footer({ home: true })
+      ]
+    )
+};
 
 const mountNode = document.querySelector("#app");
 m.route.mode = "hash";

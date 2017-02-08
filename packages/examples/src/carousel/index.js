@@ -8,7 +8,7 @@ addStyle("slider-examples-carousel", style);
 export default {
   view: () =>
     [
-      m.component(controls, {
+      m(controls, {
         hideFooter: true,
         class: "carousel",
         pageOffsetX: offset

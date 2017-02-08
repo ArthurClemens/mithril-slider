@@ -2,16 +2,19 @@
   "name": "mithril-slider",
   "main": "dist/mithril-slider.js",
   "module": "dist/mithril-slider.mjs",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Content Slider for Mithril on mobile and desktop",
   "scripts": {
-    "build": "DEPS=0 ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.umd.js && ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.es.js"
+    "build-main": "DEPS=0 ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.umd.js && DEPS=0 ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.es.js",
+    "build-css": "BABEL_ENV=test babel-node scripts/build-css.js > dist/mithril-slider.css",
+    "build": "npm run build-main && npm run build-css"
   },
   "dependencies": {
     "hammerjs": "^2.0.8",
-    "j2c": "1.0.0-4",
-    "mithril": "0.2.5",
-    "j2c-plugin-prefix-browser": "^1.0.6"
+    "mithril": "0.2.5"
+  },
+  "devDependencies": {
+    "j2c": "1.0.0-4"
   },
   "keywords": [
     "slider",

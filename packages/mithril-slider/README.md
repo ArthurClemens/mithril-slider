@@ -53,7 +53,7 @@ To run the examples:
 ## Usage
 
 ~~~javascript
-import slider from 'mithril-slider';
+import { slider } from 'mithril-slider';
 ~~~
 
 Call the slider as component, with (at least) options `pageData` and `page`:
@@ -196,7 +196,15 @@ const nextButton = m("a.next", {
 Note: With horizontal orientation and `position: absolute`, the page must have a width;
 with vertical orientation and `position: absolute`, the page must have a height.
 
-Styles are added using [j2c](https://github.com/pygy/j2c). This library is also used in the examples.
+There is very little CSS involved. The simplest approach is to link to the CSS file `dist/mithril-slider.css`, or copy the few lines to your own project.
+
+Alternatively, Mithril Slider comes with a JavaScript based CSS object that is prepared for [j2c](https://github.com/pygy/j2c), but does not import j2c itself. In the examples the CSS object is used to add styles to head:
+
+~~~javascript
+import { css } from "mithril-slider";
+import { addStyle } from "../app/styler";
+addStyle("slider", css);
+~~~
 
 
 
@@ -248,7 +256,7 @@ Styles are added using [j2c](https://github.com/pygy/j2c). This library is also 
 
 ## Size
 
-Minified and gzipped: 1.8 Kb
+Minified and gzipped: 1.7 Kb
 
 
 
@@ -256,7 +264,6 @@ Minified and gzipped: 1.8 Kb
 
 * [Mithril 0.2](https://www.npmjs.com/package/mithril)
 * [HammerJS](http://hammerjs.github.io/)
-* [j2c](https://github.com/pygy/j2c) - for creating js stylesheets
 
 
 

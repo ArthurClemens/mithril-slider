@@ -6,8 +6,8 @@ import footer from "../app/footer";
 export default {
   view: () =>
     [
-      m.component(images, { hideFooter: true }),
-      m.component(controls, { hideFooter: true }),
+      m(images, { hideFooter: true }),
+      m(controls, { hideFooter: true }),
       footer()
     ]
 };

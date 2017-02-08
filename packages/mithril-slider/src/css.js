@@ -1,6 +1,5 @@
-import { addStyle } from "./styler";
 
-const styles = [{
+export const css = [{
   ".slider": {
     overflow: "hidden",
 
@@ -13,4 +12,3 @@ const styles = [{
   }
 }];
 
-addStyle("mithril-slider", styles);

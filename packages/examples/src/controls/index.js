@@ -1,5 +1,5 @@
 import m from "mithril";
-import slider from "mithril-slider";
+import { slider } from "mithril-slider";
 import { fadeInImage } from "../app/common";
 import preloader from "../preloader";
 import footer from "../app/footer";
@@ -40,7 +40,7 @@ export default {
   view: (ctrl, opts = {}) => {
     const rtl = opts.rtl;
     const sliderController = ctrl.sliderController();
-    const mySlider = m.component(slider, {
+    const mySlider = m(slider, {
       pageData: () => Promise.resolve([
         "http://arthurclemens.github.io/assets/mithril-slider/img/01.jpg",
         "http://arthurclemens.github.io/assets/mithril-slider/img/02.jpg",

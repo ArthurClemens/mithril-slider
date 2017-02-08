@@ -1,3 +1,4 @@
+/* globals process */
 import fs from "fs";
 import babel from "rollup-plugin-babel";
 import eslint from "rollup-plugin-eslint";
@@ -6,6 +7,9 @@ import commonjs from "rollup-plugin-commonjs";
 
 export const pkg = JSON.parse(fs.readFileSync("./package.json"));
 const external = Object.keys(pkg.dependencies || {});
+const env = process.env; // eslint-disable-line no-undef
+const entry = env.ENTRY || "index.js";
+const moduleName = env.MODULE || pkg.name;
 
 const globals = {};
 external.forEach(ext => {
@@ -19,9 +23,9 @@ external.forEach(ext => {
 });
 
 export const createConfig = ({ includeDepencies }) => ({
-  entry: "index.js",
+  entry,
   external: (includeDepencies ? [] : external),
-  moduleName: pkg.name,
+  moduleName,
   globals,
   plugins: [
 

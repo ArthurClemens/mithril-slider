@@ -1,8 +1,8 @@
 import FastClick from 'fastclick';
 import m from 'mithril';
+import { css, slider } from 'mithril-slider';
 import { prefixPlugin } from 'j2c-plugin-prefix-browser';
 import J2c from 'j2c';
-import slider from 'mithril-slider';
 
 var layer = document.body;
 var fastClick = void 0;
@@ -342,7 +342,7 @@ var page = function page(opts) {
 
 var images = {
   view: function view(ctrl, opts) {
-    return m("div", [m.component(slider, {
+    return m("div", [m(slider, {
       pageData: getPageData,
       page: page,
       class: "example images"
@@ -395,7 +395,7 @@ var vertical = {
   view: function view(ctrl) {
     var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-    return m("div", [m.component(slider, {
+    return m("div", [m(slider, {
       pageData: getPageData,
       page: page$1,
       class: "example vertical",
@@ -519,7 +519,7 @@ var controls = {
 
     var rtl = opts.rtl;
     var sliderController = ctrl.sliderController();
-    var mySlider = m.component(slider, {
+    var mySlider = m(slider, {
       pageData: function pageData() {
         return Promise.resolve(["http://arthurclemens.github.io/assets/mithril-slider/img/01.jpg", "http://arthurclemens.github.io/assets/mithril-slider/img/02.jpg", "http://arthurclemens.github.io/assets/mithril-slider/img/03.jpg", "http://arthurclemens.github.io/assets/mithril-slider/img/04.jpg", "http://arthurclemens.github.io/assets/mithril-slider/img/05.jpg", "http://arthurclemens.github.io/assets/mithril-slider/img/06.jpg", "http://arthurclemens.github.io/assets/mithril-slider/img/07.jpg", "http://arthurclemens.github.io/assets/mithril-slider/img/08.jpg", "http://arthurclemens.github.io/assets/mithril-slider/img/09.jpg", "http://arthurclemens.github.io/assets/mithril-slider/img/10.jpg"]);
       },
@@ -583,7 +583,7 @@ addStyle("slider-examples-carousel", style$3);
 
 var carousel = {
   view: function view() {
-    return [m.component(controls, {
+    return [m(controls, {
       hideFooter: true,
       class: "carousel",
       pageOffsetX: offset
@@ -593,7 +593,7 @@ var carousel = {
 
 var ltr = {
   view: function view() {
-    return m.component(controls, { rtl: true });
+    return m(controls, { rtl: true });
   }
 };
 
@@ -789,7 +789,7 @@ var group = {
   view: function view(ctrl, opts) {
     var sliderController = ctrl.sliderController();
     var groupBy = ctrl.groupBy();
-    var mySlider = m.component(slider, {
+    var mySlider = m(slider, {
       pageData: getPageData,
       page: callRight(page$3, ctrl),
       groupBy: groupBy,
@@ -823,10 +823,11 @@ var group = {
 
 var multiple = {
   view: function view() {
-    return [m.component(images, { hideFooter: true }), m.component(controls, { hideFooter: true }), content()];
+    return [m(images, { hideFooter: true }), m(controls, { hideFooter: true }), content()];
   }
 };
 
+addStyle("slider", css);
 addStyle("slider-examples-app", appStyle);
 addStyle("slider-examples-index", indexStyle);
 
@@ -875,9 +876,10 @@ var menu = m("ul.menu", [m("li.header", "Examples"), menuData.map(function (menu
   }, [m("span.title", menuItem.title), m("span.subtitle", menuItem.subtitle)]));
 })]);
 
-var app = {};
-app.view = function () {
-  return m(".index", [m("h1", "Content Slider for Mithril"), menu, content({ home: true })]);
+var app = {
+  view: function view() {
+    return m(".index", [m("h1", "Content Slider for Mithril"), menu, content({ home: true })]);
+  }
 };
 
 var mountNode = document.querySelector("#app");

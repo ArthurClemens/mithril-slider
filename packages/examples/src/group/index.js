@@ -1,5 +1,5 @@
 import m from "mithril";
-import slider from "mithril-slider";
+import { slider } from "mithril-slider";
 import { getPageData, fadeInImage } from "../app/common";
 import preloader from "../preloader";
 import footer from "../app/footer";
@@ -48,7 +48,7 @@ export default {
   view: (ctrl, opts) => {
     const sliderController = ctrl.sliderController();
     const groupBy = ctrl.groupBy();
-    const mySlider = m.component(slider, {
+    const mySlider = m(slider, {
       pageData: getPageData,
       page: callRight(page, ctrl),
       groupBy: groupBy,

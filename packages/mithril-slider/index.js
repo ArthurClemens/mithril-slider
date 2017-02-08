@@ -1,2 +1,2 @@
-import { slider } from "./src/index";
-export default slider;
+export { slider } from "./src/index";
+export { css } from "./src/css";

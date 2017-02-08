@@ -1,7 +1,6 @@
 import m from "mithril";
 import Hammer from "hammerjs";
 import { classes } from "./classes";
-import "./css";
 
 const view = (ctrl, opts) => {
   if (opts.sliderController) {
@@ -72,9 +71,8 @@ const view = (ctrl, opts) => {
   );
 };
 
-
 const controller = (opts = {}) => {
-  let list = m.prop([]);
+  const list = m.prop([]);
   if (opts.pageData) {
     opts.pageData().then(result => initWithResult(result));
   }
@@ -252,7 +250,6 @@ const controller = (opts = {}) => {
     handleDragEnd,
     groupBy,
     updateContentSize,
-    // registerPage,
 
     // public interface
     index,
