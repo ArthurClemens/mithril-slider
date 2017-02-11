@@ -2,6 +2,8 @@
 
 Handles series of pageable content. This code is a Mithril component wrapper around [HammerJS](http://hammerjs.github.io/), with additional features.
 
+Compatible with Mithril 0.2.
+
 
 
 ## Examples
@@ -12,12 +14,13 @@ Handles series of pageable content. This code is a Mithril component wrapper aro
 
 ## Features
 
-* Pages can be swiped or dragged.
-* Page content can be anything that can be shown with HTML: a single image, a full web page, and so on.
-* Pages can be grouped, for instance for series of thumbnails that are shown a group at a time.
-* Page content can be lazily loaded (see example code).
+* Elements can be swiped or dragged.
+* Content can be anything that can be shown with HTML: a single image, a card, and so on.
+* Elements can be grouped, for instance for series of thumbnails that are shown a group at a time.
+* Elements content can be lazily loaded (see example code).
 * The slider can be controlled with next/previous buttons and queried for state.
 * Right-to-left language support, using mirrored transitions.
+
 
 
 ## Installation
@@ -56,7 +59,7 @@ To run the examples:
 import { slider } from 'mithril-slider';
 ~~~
 
-Call the slider as component, with (at least) options `pageData` and `page`:
+Slider panel contents is called a "page". Call the slider as component, with (at least) options `pageData` and `page`:
 
 ~~~javascript
 m(slider, {
@@ -68,13 +71,12 @@ m(slider, {
 For option `pageData`, create a function to fetch page data:
 
 ~~~javascript
-const getPageData = () => {
-  return m.request({
+const getPageData = () =>
+  m.request({
     method: 'GET',
     url: 'app/data/images.json',
     background: false
   });
-};
 ~~~
 
 The function needs to return a promise (which `m.request` does).
@@ -99,17 +101,15 @@ or
 ]
 ~~~
 
-For option `page`, create a function that returns a Mithril object for each single list item:
+For option `page`, create a function that returns a Mithril object for each single data item:
 
 ~~~javascript
-const page = opts => {
-	const data = opts.data;
-  return m('.page', {
-		style: {
-			backgroundImage: `url(${data})`
-		}
+const page = opts =>
+  m('.page', {
+    style: {
+      backgroundImage: `url(${opts.data})`
+    }
   });
-};
 ~~~
 
 This function will be called for all list items.
@@ -156,7 +156,7 @@ Use CSS to set the proper page size for each element.
 
 
 
-### Accessing the slider directly
+### Slider controls
 
 The above example is fine for simply interacting with the slider (swiping/dragging). For more advanced functionality - for instance to conditionally show next/previous buttons - we need to access the slider instance.
 
@@ -185,7 +185,7 @@ Now we can access slider controller methods:
 ~~~javascript
 const sliderController = ctrl.sliderController();
 const nextButton = m("a.next", {
-  class: sliderController.hasNext() ? "enabled" : "",
+  class: sliderController.hasNext() ? "enabled" : "disabled",
   onclick: () => sliderController.goNext()
 }, "Next")
 ~~~
