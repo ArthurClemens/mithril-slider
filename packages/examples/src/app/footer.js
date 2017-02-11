@@ -37,6 +37,6 @@ export default (opts = {}) => {
       oncreate: m.route.link
     }, "All examples") : null,
     m("hr"),
-    m.trust(`mithril-slider, content slider for Mithril on mobile and desktop. This site runs on version ${VERSION}. Project page on <a href="https: //github.com/ArthurClemens/mithril-slider">Github</a>.`)
+    m.trust(`mithril-slider, content slider for Mithril on mobile and desktop. This site runs on version ${VERSION}. Project page on <a href="https://github.com/ArthurClemens/mithril-slider">Github</a>.`)
   ]);
 };

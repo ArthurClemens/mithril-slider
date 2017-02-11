@@ -3197,7 +3197,7 @@ var footer = (function () {
   }, [!opts.home ? m("a", {
     href: "/",
     oncreate: m.route.link
-  }, "All examples") : null, m("hr"), m.trust("mithril-slider, content slider for Mithril on mobile and desktop. This site runs on version " + VERSION + ". Project page on <a href=\"https: //github.com/ArthurClemens/mithril-slider\">Github</a>.")]);
+  }, "All examples") : null, m("hr"), m.trust("mithril-slider, content slider for Mithril on mobile and desktop. This site runs on version " + VERSION + ". Project page on <a href=\"https://github.com/ArthurClemens/mithril-slider\">Github</a>.")]);
 });
 
 var DATA_URL = "data/server.json";
