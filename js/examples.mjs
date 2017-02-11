@@ -3164,7 +3164,7 @@ var indexStyle = [{
 }];
 
 var SIDE_PADDING = 16;
-var VERSION = "0.4.0";
+var VERSION = "1.0.0";
 
 var styles = [{
   ".footer": {
