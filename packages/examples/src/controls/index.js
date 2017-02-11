@@ -13,33 +13,54 @@ const page = opts => {
   const data = opts.data;
   // lazy loading
   const inRange = Math.abs(currentIndex - listIndex) < 2;
-  const content = inRange ? m(".image-container", [
-    m(".image", {
-      config: (el, inited) => {
-        if (inited) {
-          return;
-        }
-        fadeInImage(el, data);
-      }
-    }),
-    preloader
-  ]) : null;
+  const content = inRange
+    ? m(".image-container",
+      [
+        m(".image", {
+          oncreate: ({dom}) => {
+            fadeInImage(dom, data);
+          }
+        }),
+        preloader
+      ])
+    : null;
   return m(".page", {
     key: listIndex,
     class: currentIndex === listIndex ? "current-page" : null
   }, content);
 };
 
+const sliderControls = (sliderController, isEditing, setIsEditing) =>
+ sliderController
+  ? m(".slider-controls.slider-controls-controls",
+    [
+      m("input.goto", {
+        value: isEditing ? "" : sliderController.index() + 1,
+        oninput: e => {
+          setIsEditing(true);
+          const idx = parseInt(e.target.value, 10) - 1;
+          if (!isNaN(idx)) {
+            sliderController.goTo(idx, 0);
+            setIsEditing(false);
+          }
+        }
+      }),
+      m("a.prev", {
+        class: sliderController.hasPrevious() ? "enabled" : "",
+        onclick: () => sliderController.goPrevious()
+      }, "Previous"),
+      m("a.next", {
+        class: sliderController.hasNext() ? "enabled" : "",
+        onclick: () => sliderController.goNext()
+      }, "Next")
+    ]
+  )
+  : null;
+
 export default {
-  controller: () => {
-    return {
-      sliderController: m.prop(),
-      isEditing: m.prop(false) // allow value change when typing
-    };
-  },
-  view: (ctrl, opts = {}) => {
-    const rtl = opts.rtl;
-    const sliderController = ctrl.sliderController();
+  view: ({attrs, state}) => {
+    const rtl = attrs.rtl;
+    const sliderController = state.sliderController;
     const mySlider = m(slider, {
       pageData: () => Promise.resolve([
         "http://arthurclemens.github.io/assets/mithril-slider/img/01.jpg",
@@ -54,40 +75,20 @@ export default {
         "http://arthurclemens.github.io/assets/mithril-slider/img/10.jpg"
       ]),
       page,
-      pageOffsetX: opts.pageOffsetX,
-      sliderController: ctrl.sliderController,
-      class: ["example controls", opts.class].join(" "),
+      pageOffsetX: attrs.pageOffsetX,
+      sliderController: ctrl => state.sliderController = ctrl,
+      class: ["example controls", attrs.class].join(" "),
       rtl
     });
-    const sliderControls = sliderController ? m(".slider-controls.slider-controls-controls", [
-      m("input.goto", {
-        value: ctrl.isEditing() ? "" : sliderController.index() + 1,
-        oninput: e => {
-          ctrl.isEditing(true);
-          const idx = parseInt(e.target.value, 10) - 1;
-          if (!isNaN(idx)) {
-            sliderController.goTo(idx, 0);
-            ctrl.isEditing(false);
-          }
-        }
-      }),
-      m("a.prev", {
-        class: sliderController.hasPrevious() ? "enabled" : "",
-        onclick: () => sliderController.goPrevious()
-      }, "Previous"),
-      m("a.next", {
-        class: sliderController.hasNext() ? "enabled" : "",
-        onclick: () => sliderController.goNext()
-      }, "Next")
-    ]) : null;
+    const controls = sliderControls(sliderController, state.isEditing, editing => state.isEditing = editing);
     const props = rtl
       ? { dir: "rtl" }
-      : {};
+      : null;
     return m("div", props, [
       mySlider,
       m(".slider-placeholder"),
-      sliderControls,
-      opts.hideFooter ? null : footer()
+      controls,
+      attrs.hideFooter ? null : footer()
     ]);
   }
 };

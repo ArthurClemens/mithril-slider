@@ -2,7 +2,7 @@
   "name": "mithril-slider",
   "main": "dist/mithril-slider.js",
   "module": "dist/mithril-slider.mjs",
-  "version": "0.4.1",
+  "version": "1.0.0",
   "description": "Content Slider for Mithril on mobile and desktop",
   "scripts": {
     "build-main": "DEPS=0 ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.umd.js && DEPS=0 ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.es.js",
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "hammerjs": "^2.0.8",
-    "mithril": "0.2.5"
+    "mithril": "^1.0.0"
   },
   "devDependencies": {
     "j2c": "1.0.0-4"

@@ -1,7 +1,7 @@
 
 export const classes = {
-  slider:    "slider",
-  content:   "content",
-  before:    "before",
-  after:     "after"
+  slider:    "mithril-slider",
+  content:   "mithril-slider__content",
+  before:    "mithril-slider__before",
+  after:     "mithril-slider__after"
 };

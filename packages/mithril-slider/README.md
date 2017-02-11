@@ -2,7 +2,7 @@
 
 Handles series of pageable content. This code is a Mithril component wrapper around [HammerJS](http://hammerjs.github.io/), with additional features.
 
-Compatible with Mithril 0.2.
+Compatible with Mithril 1.0.
 
 
 
@@ -94,10 +94,10 @@ or
 
 ~~~json
 [
-	{
+  {
     "title": "Love Valley, Cappadocia",
     "image": "images/1.jpg"
-	},
+  },
 ]
 ~~~
 
@@ -163,29 +163,26 @@ The above example is fine for simply interacting with the slider (swiping/draggi
 By passing option `sliderController`, we can get a reference to the slider controller. The option is actually a function reference, and we can use `m.prop` to store the controller for later reference:
 
 ~~~javascript
-const app = {};
-app.controller = () => {
-  return {
-    sliderController: m.prop()
-  };
-};
-app.view = (ctrl) => {
-  const mySlider = m(slider, {
-    pageData,
-    page,
-    sliderController: ctrl.sliderController,
-    ...
-  });
-	...
+const app = {
+  view: vnode => {
+    const mySlider = m(slider, {
+      pageData,
+      page,
+      sliderController: ctrl => vnode.state.sliderController = ctrl,
+      ...
+    });
+  }
 };
 ~~~
 
 Now we can access slider controller methods:
 
 ~~~javascript
-const sliderController = ctrl.sliderController();
+const sliderController = vnode.state.sliderController;
 const nextButton = m("a.next", {
-  class: sliderController.hasNext() ? "enabled" : "disabled",
+  class: sliderController.hasNext()
+    ? "enabled"
+    : "disabled",
   onclick: () => sliderController.goNext()
 }, "Next")
 ~~~
@@ -247,16 +244,16 @@ addStyle("slider", css);
 
 | **Element**          | **Key**       |  **Class** |
 | -------------------- | ------------- | ---------- |
-| slider               | slider        | `slider`   |
-| content              | content       | `content`  |
-| before               | before        | `before`   |
-| after                | after         | `after`    |
+| slider               | slider        | `mithril-slider`   |
+| content              | content       | `mithril-slider__content`  |
+| before               | before        | `mithril-slider__before`   |
+| after                | after         | `mithril-slider__after`    |
 
 
 
 ## Size
 
-Minified and gzipped: 1.7 Kb
+Minified and gzipped: 1.8 Kb
 
 
 

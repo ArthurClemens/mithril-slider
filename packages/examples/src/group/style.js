@@ -8,7 +8,7 @@ const pageSizes = () => {
   while (i <= 5) {
     const size = styleVariables.size / i;
     sizes[".group-" + i] = {
-      " .content": {
+      " .mithril-slider__content": {
         height: Math.floor(size) + "px"
       },
       " .page": {
@@ -114,7 +114,7 @@ const pageNumberStyle = () => {
     fontSize: "12px",
     textAlign: "center",
     backgroundColor: "rgba(255,255,255,.5)",
-    zIndex: 1
+    zIndex: 2
   };
 };
 

@@ -17,11 +17,8 @@ const page = opts => {
       [
         m(".image",
           {
-            config: (el, inited) => {
-              if (inited) {
-                return;
-              }
-              fadeInImage(el, data, () => {
+            oncreate: ({dom}) => {
+              fadeInImage(dom, data, () => {
                 loaded[listIndex] = true;
               });
             }
@@ -37,7 +34,7 @@ const page = opts => {
 };
 
 export default {
-  view: (ctrl, opts) =>
+  view: ({attrs}) =>
     m("div", [
       m(slider, {
         pageData: getPageData,
@@ -45,6 +42,6 @@ export default {
         class: "example images"
       }),
       m(".slider-placeholder"),
-      opts.hideFooter ? null : footer()
+      attrs.hideFooter ? null : footer()
     ])
 };

@@ -28,17 +28,15 @@ const styles = [{
 
 addStyle("slider-examples-footer", styles);
 
-let content = (opts = {}) => {
+export default (opts = {}) => {
   return m(".footer", {
     dir: "ltr"
   }, [!opts.home ? m("a",
     {
       href: "/",
-      config: m.route
+      oncreate: m.route.link
     }, "All examples") : null,
     m("hr"),
     m.trust(`mithril-slider, content slider for Mithril on mobile and desktop. This site runs on version ${VERSION}. Project page on <a href="https: //github.com/ArthurClemens/mithril-slider">Github</a>.`)
   ]);
 };
-
-export default content;

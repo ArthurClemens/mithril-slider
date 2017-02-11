@@ -35,12 +35,12 @@ export default [{
   " .example": [
     pagePositions("ltr"),
     {
-      "&.slider": {
+      "&.mithril-slider": {
         width: styleVariables.size + "px",
         height: styleVariables.size + "px",
         margin: "0 auto"
       },
-      " .content": {
+      " .mithril-slider__content": {
         position: "relative",
         minHeight: styleVariables.size + "px"
       },
@@ -74,7 +74,7 @@ export default [{
   " .slider-placeholder": {
     height: styleVariables.size + "px"
   },
-  " .slider + .slider-placeholder": {
+  " .mithril-slider + .slider-placeholder": {
     display: "none"
   },
   " [dir='rtl']": {

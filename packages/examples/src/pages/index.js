@@ -24,11 +24,8 @@ const page = opts => {
       m(".article", [
         m(".image-container", [
           m(".image", {
-            config: (el, inited) => {
-              if (inited) {
-                return;
-              }
-              fadeInImage(el, data.image);
+            oncreate: ({dom}) => {
+              fadeInImage(dom, data.image);
             }
           }),
           preloader

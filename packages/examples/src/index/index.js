@@ -1,7 +1,6 @@
 import "../app/no-tap-delay";
 import m from "mithril";
 import { css } from "mithril-slider";
-
 import { addStyle } from "../app/styler";
 import appStyle from "../app/style";
 import indexStyle from "./style";
@@ -16,28 +15,26 @@ import controls from "../controls";
 import carousel from "../carousel";
 import ltr from "../ltr";
 import group from "../group";
-// import pages from "../pages";
-import multiple from "../multiple";
 
 const menuData = [
   {
     href: "/images",
-    title: "Simple image swipe",
+    title: "Simple",
     subtitle: "Swiping a series of images."
   },
   {
     href: "/vertical",
-    title: "Vertical image swipe",
+    title: "Vertical",
     subtitle: "Swiping a vertical series of images."
   },
   {
     href: "/controls",
-    title: "Slider controls",
+    title: "Controls",
     subtitle: "Using controls to manage sliding and get feedback."
   },
   {
     href: "/carousel",
-    title: "Centered image",
+    title: "Centered",
     subtitle: "Showing hints of previous and next images."
   },
   {
@@ -47,19 +44,8 @@ const menuData = [
   },
   {
     href: "/group",
-    title: "Dynamic groups",
+    title: "Groups",
     subtitle: "Creating dynamically sized pages."
-  },
-  /* Pages is not ready for prime time */
-  // {
-  //   href: "/pages",
-  //   title: "Page content",
-  //   subtitle: "More diverse content."
-  // },
-  {
-    href: "/multiple",
-    title: "Multiple",
-    subtitle: "Multiple sliders on one page."
   }
 ];
 
@@ -71,7 +57,7 @@ const menu = m("ul.menu",
         m("a",
           {
             href: menuItem.href,
-            config: m.route
+            oncreate: m.route.link
           },
           [
             m("span.title", menuItem.title),
@@ -95,7 +81,7 @@ const app = {
 };
 
 const mountNode = document.querySelector("#app");
-m.route.mode = "hash";
+m.route.prefix("#");
 m.route(mountNode, "/", {
   "/": app,
   "/images": images,
@@ -103,7 +89,5 @@ m.route(mountNode, "/", {
   "/controls": controls,
   "/carousel": carousel,
   "/ltr": ltr,
-  "/group": group,
-  // "/pages": pages,
-  "/multiple": multiple
+  "/group": group
 });

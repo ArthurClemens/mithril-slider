@@ -5,12 +5,9 @@ addStyle("preloader", style);
 
 export default m(".preloader",
   {
-    config: (el, inited) => {
-      if (inited) {
-        return;
-      }
+    oncreate: ({dom}) => {
       setTimeout(() => {
-        el.style.visibility = "visible";
+        dom.style.visibility = "visible";
       }, 1000);
     }
   },

@@ -15,11 +15,8 @@ const page = opts => {
   const inRange = Math.abs(currentIndex - listIndex) < 2;
   const content = inRange ? m(".image-container", [
     m(".image", {
-      config: (el, inited) => {
-        if (inited) {
-          return;
-        }
-        fadeInImage(el, data);
+      oncreate: ({dom}) => {
+        fadeInImage(dom, data);
       }
     }),
     preloader
@@ -30,7 +27,7 @@ const page = opts => {
 };
 
 export default {
-  view: (ctrl, opts = {}) => {
+  view: ({attrs}) => {
     return m("div", [
       m(slider, {
         pageData: getPageData,
@@ -39,7 +36,7 @@ export default {
         orientation: "vertical"
       }),
       m(".slider-placeholder"),
-      opts.hideFooter ? null : footer()
+      attrs.hideFooter ? null : footer()
     ]);
   }
 };

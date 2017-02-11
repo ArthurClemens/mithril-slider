@@ -1,87 +1,129 @@
 import m from 'mithril';
 import Hammer from 'hammerjs';
 
-var classes = {
-  slider: "slider",
-  content: "content",
-  before: "before",
-  after: "after"
+var prop = (function (x) {
+  var p = x;
+  return function (args) {
+    if (args === undefined) {
+      return p;
+    } else {
+      p = args;
+    }
+  };
+});
+
+var Touch = function Touch(_ref) {
+  var el = _ref.el,
+      orientation = _ref.orientation,
+      onStart = _ref.onStart,
+      onMove = _ref.onMove,
+      onEnd = _ref.onEnd;
+
+  var hammer = new Hammer.Manager(el, {});
+  hammer.add(new Hammer.Pan({
+    direction: orientation === "vertical" ? Hammer.DIRECTION_VERTICAL : orientation === "all" ? Hammer.DIRECTION_ALL : Hammer.DIRECTION_HORIZONTAL,
+    threshold: 0
+  }));
+  hammer.on("panstart", onStart);
+  hammer.on("panmove", onMove);
+  hammer.on("panend", onEnd);
+
+  return {
+    destroy: function destroy() {
+      hammer.off("panstart", onStart);
+      hammer.off("panmove", onMove);
+      hammer.off("panend", onEnd);
+    }
+  };
 };
 
-var view = function view(ctrl, opts) {
-  if (opts.sliderController) {
-    opts.sliderController(ctrl);
+var classes = {
+  slider: "mithril-slider",
+  content: "mithril-slider__content",
+  before: "mithril-slider__before",
+  after: "mithril-slider__after"
+};
+
+var DEFAULT_DURATION = 160;
+var DEFAULT_CANCEL_DRAG_FACTOR = 1 / 5;
+var DEFAULT_GROUP_SIZE = 1;
+var DEFAULT_ORIENTATION = "vertical";
+var DEFAULT_DIRECTION = 1;
+var DEFAULT_OFFSET_X = 0;
+var DEFAULT_OFFSET_Y = 0;
+
+var view = function view(_ref) {
+  var state = _ref.state,
+      attrs = _ref.attrs;
+
+  if (attrs.sliderController) {
+    attrs.sliderController(state);
   }
-  var currentIndex = ctrl.index();
+  var currentIndex = state.index();
   // sizes need to be set each redraw because of screen resizes
-  ctrl.groupBy(opts.groupBy || 1);
-  var contentEl = ctrl.contentEl();
+  state.groupBy(attrs.groupBy || 1);
+  var contentEl = state.contentEl;
   if (contentEl) {
-    ctrl.updateContentSize(contentEl);
+    state.updateContentSize(contentEl);
   }
   return m("div", {
-    class: [classes.slider, opts.class || ""].join(" ")
-  }, [opts.before ? m("." + classes.before, opts.before) : null, m("div", {
+    class: [classes.slider, attrs.class || ""].join(" ")
+  }, [attrs.before ? m("." + classes.before, attrs.before) : null, m("div", {
     class: classes.content,
-    config: function config(el, inited, context) {
-      if (context.inited) {
+    onupdate: function onupdate(_ref2) {
+      var dom = _ref2.dom;
+
+      if (state.inited) {
         return;
       }
-      if (el.childNodes.length > 0) {
-        (function () {
-          ctrl.setContentEl(el);
-          ctrl.updateContentSize(el);
-
-          var mc = new Hammer.Manager(el, {});
-          mc.add(new Hammer.Pan({
-            direction: opts.orientation === "vertical" ? Hammer.DIRECTION_VERTICAL : opts.orientation === "all" ? Hammer.DIRECTION_ALL : Hammer.DIRECTION_HORIZONTAL,
-            threshold: 0
-          }));
-          mc.on("panmove", ctrl.handleDrag);
-          mc.on("panend", ctrl.handleDragEnd);
-          mc.on("panstart", ctrl.handleDragStart);
-          context.onunload = function () {
-            mc.off("panmove", ctrl.handleDrag);
-            mc.off("panend", ctrl.handleDragEnd);
-            mc.off("panstart", ctrl.handleDragStart);
-          };
-          context.inited = true;
-        })();
+      if (dom.childNodes.length > 0) {
+        state.setContentEl(dom);
+        state.updateContentSize(dom);
+        state.touch = new Touch({
+          el: dom,
+          orientation: attrs.orientation,
+          onStart: state.handleDragStart,
+          onMove: state.handleDrag,
+          onEnd: state.handleDragEnd
+        });
+        state.inited = true;
       }
+    },
+    onremove: function onremove() {
+      return state.touch && state.touch.destroy();
     }
-  }, ctrl.list().map(function (data, listIndex) {
-    return opts.page({
+  }, state.list().map(function (data, listIndex) {
+    return attrs.page({
       data: data,
       listIndex: listIndex,
       currentIndex: currentIndex
     });
-  })), opts.after ? m("." + classes.after, opts.after) : null]);
+  })), attrs.after ? m("." + classes.after, attrs.after) : null]);
 };
 
-var controller = function controller() {
-  var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-  var list = m.prop([]);
-  if (opts.pageData) {
-    opts.pageData().then(function (result) {
+var oninit = function oninit(vnode) {
+  var attrs = vnode.attrs;
+  var list = prop([]);
+  if (attrs.pageData) {
+    attrs.pageData().then(function (result) {
       return initWithResult(result);
     });
   }
-  var defaultDuration = parseInt(opts.duration, 10) || 160;
-  var index = m.prop(opts.index || -1);
-  var contentEl = m.prop();
+  var duration = parseInt(attrs.duration, 10) || DEFAULT_DURATION;
+  var index = prop(attrs.index || -1);
+  var contentEl = void 0;
   var pageSize = 0;
-  var groupBy = m.prop(opts.groupBy || 1);
-  var cancelDragFactor = opts.cancelDragFactor || 1 / 5;
-  var isVertical = opts.orientation === "vertical";
-  var dir = opts.rtl ? -1 : 1;
-  var pageOffsetX = opts.pageOffsetX || 0;
-  var pageOffsetY = opts.pageOffsetY || 0;
+  var groupBy = prop(attrs.groupBy || DEFAULT_GROUP_SIZE);
+  var cancelDragFactor = attrs.cancelDragFactor || DEFAULT_CANCEL_DRAG_FACTOR;
+  var isVertical = attrs.orientation === DEFAULT_ORIENTATION;
+  var dir = attrs.rtl ? -1 : DEFAULT_DIRECTION;
+  var pageOffsetX = attrs.pageOffsetX || DEFAULT_OFFSET_X;
+  var pageOffsetY = attrs.pageOffsetY || DEFAULT_OFFSET_Y;
 
   var initWithResult = function initWithResult(result) {
     list(result);
     // First redraw so that pages are drawn
-    // continuation in view's config
+    // continuation in view's oncreate
     m.redraw();
   };
 
@@ -90,10 +132,10 @@ var controller = function controller() {
     if (oldIndex !== idx) {
       index(idx);
       m.redraw();
-      if (opts.getState) {
-        var el = contentEl();
+      if (attrs.getState) {
+        var el = contentEl;
         var page = getPageEl(el, index());
-        opts.getState({
+        attrs.getState({
           index: idx,
           hasNext: hasNext(),
           hasPrevious: hasPrevious(),
@@ -121,18 +163,18 @@ var controller = function controller() {
   };
 
   var setTransitionDurationStyle = function setTransitionDurationStyle(duration) {
-    contentEl().style["-webkit-transition-duration"] = contentEl().style["transition-duration"] = duration + "ms";
+    contentEl.style["-webkit-transition-duration"] = contentEl.style["transition-duration"] = duration + "ms";
   };
 
   var goTo = function goTo(idx, duration) {
     if (idx < 0 || idx > list().length - 1) {
       return;
     }
-    updateContentSize(contentEl());
+    updateContentSize(contentEl);
     if (duration !== undefined) {
       setTransitionDurationStyle(duration);
     }
-    setTransitionStyle(contentEl(), -dir * idx * pageSize);
+    setTransitionStyle(contentEl, -dir * idx * pageSize);
     setIndex(idx);
   };
 
@@ -155,30 +197,30 @@ var controller = function controller() {
   };
 
   var updateContentSize = function updateContentSize(el) {
-    var prop = isVertical ? "height" : "width";
+    var prop$$1 = isVertical ? "height" : "width";
     var page = el.childNodes[0];
-    if (page.getBoundingClientRect()[prop]) {
-      pageSize = page.getBoundingClientRect()[prop];
-      el.style[prop] = list().length * pageSize + "px";
+    if (page.getBoundingClientRect()[prop$$1]) {
+      pageSize = page.getBoundingClientRect()[prop$$1];
+      el.style[prop$$1] = list().length * pageSize + "px";
     }
   };
 
   var goCurrent = function goCurrent() {
     var duration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
-    updateContentSize(contentEl());
+    updateContentSize(contentEl);
     setTransitionDurationStyle(duration);
     goTo(normalizedStep());
   };
 
   var goNext = function goNext() {
-    var duration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultDuration;
-    return setTransitionDurationStyle(duration), index() < list().length ? goTo(normalizedStep(1)) : goTo(normalizedStep());
+    var dur = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : duration;
+    return setTransitionDurationStyle(dur), index() < list().length ? goTo(normalizedStep(1)) : goTo(normalizedStep());
   };
 
   var goPrevious = function goPrevious() {
-    var duration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultDuration;
-    return setTransitionDurationStyle(duration), index() > 0 ? goTo(normalizedStep(-1)) : goTo(normalizedStep());
+    var dur = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : duration;
+    return setTransitionDurationStyle(dur), index() > 0 ? goTo(normalizedStep(-1)) : goTo(normalizedStep());
   };
 
   var hasNext = function hasNext() {
@@ -190,17 +232,17 @@ var controller = function controller() {
   };
 
   var setContentEl = function setContentEl(el) {
-    contentEl(el);
+    contentEl = el;
     updateContentSize(el);
     goCurrent();
   };
 
   var handleDragStart = function handleDragStart() {
-    return updateContentSize(contentEl()), setTransitionDurationStyle(0);
+    return updateContentSize(contentEl), setTransitionDurationStyle(0);
   };
 
   var handleDrag = function handleDrag(e) {
-    var el = contentEl();
+    var el = contentEl;
     var page = getPageEl(el, index());
     var delta = isVertical ? e.deltaY + pageOffsetY : e.deltaX + pageOffsetX;
     var origin = isVertical ? page.offsetTop : dir === -1 ? page.offsetLeft - page.parentNode.clientWidth + page.clientWidth : page.offsetLeft;
@@ -209,32 +251,32 @@ var controller = function controller() {
   };
 
   var calculateTransitionDuration = function calculateTransitionDuration(velocity) {
-    var el = contentEl();
+    var el = contentEl;
     var page = getPageEl(el, index());
     var width = page.clientWidth;
     var speed = Math.abs(velocity) || 1;
-    var duration = 1 / speed * width;
-    if (duration > defaultDuration) {
-      duration = defaultDuration;
+    var dur = 1 / speed * width;
+    if (dur > duration) {
+      dur = duration;
     }
-    return duration;
+    return dur;
   };
 
   var handleDragEnd = function handleDragEnd(e) {
-    var duration = calculateTransitionDuration(e.velocity);
+    var dur = calculateTransitionDuration(e.velocity);
     var delta = isVertical ? e.deltaY : e.deltaX;
     if (Math.abs(delta) > pageSize * groupBy() * cancelDragFactor) {
       if (dir * delta < 0) {
-        goNext(duration);
+        goNext(dur);
       } else {
-        goPrevious(duration);
+        goPrevious(dur);
       }
     } else {
-      goCurrent(duration);
+      goCurrent(dur);
     }
   };
 
-  return {
+  vnode.state = {
     // component methods
     list: list,
     contentEl: contentEl,
@@ -257,15 +299,15 @@ var controller = function controller() {
 };
 
 var slider = {
-  controller: controller,
+  oninit: oninit,
   view: view
 };
 
 var css = [{
-  ".slider": {
+  ".mithril-slider": {
     overflow: "hidden",
 
-    " .content": {
+    " .mithril-slider__content": {
       transitionProperty: "transform",
       transitionTimingFunction: "ease-out",
       // transition-duration set in js

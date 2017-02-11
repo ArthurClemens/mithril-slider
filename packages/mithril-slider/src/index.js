@@ -1,96 +1,96 @@
 import m from "mithril";
-import Hammer from "hammerjs";
+import prop from "./prop";
+import { Touch } from "./touch";
 import { classes } from "./classes";
 
-const view = (ctrl, opts) => {
-  if (opts.sliderController) {
-    opts.sliderController(ctrl);
+const DEFAULT_DURATION = 160;
+const DEFAULT_CANCEL_DRAG_FACTOR = 1 / 5;
+const DEFAULT_GROUP_SIZE = 1;
+const DEFAULT_ORIENTATION = "vertical";
+const DEFAULT_DIRECTION = 1;
+const DEFAULT_OFFSET_X = 0;
+const DEFAULT_OFFSET_Y = 0;
+
+const view = ({state, attrs}) => {
+  if (attrs.sliderController) {
+    attrs.sliderController(state);
   }
-  const currentIndex = ctrl.index();
+  const currentIndex = state.index();
   // sizes need to be set each redraw because of screen resizes
-  ctrl.groupBy(opts.groupBy || 1);
-  const contentEl = ctrl.contentEl();
+  state.groupBy(attrs.groupBy || 1);
+  const contentEl = state.contentEl;
   if (contentEl) {
-    ctrl.updateContentSize(contentEl);
+    state.updateContentSize(contentEl);
   }
   return m("div",
     {
       class: [
         classes.slider,
-        opts.class || ""
+        attrs.class || ""
       ].join(" ")
     },
     [
-      opts.before
-        ? m("." + classes.before, opts.before)
+      attrs.before
+        ? m("." + classes.before, attrs.before)
         : null,
       m("div",
         {
           class: classes.content,
-          config: (el, inited, context) => {
-            if (context.inited) {
+          onupdate: ({dom}) => {
+            if (state.inited) {
               return;
             }
-            if (el.childNodes.length > 0) {
-              ctrl.setContentEl(el);
-              ctrl.updateContentSize(el);
-
-              const mc = new Hammer.Manager(el, {});
-              mc.add(new Hammer.Pan({
-                direction: opts.orientation === "vertical"
-                  ? Hammer.DIRECTION_VERTICAL
-                  : opts.orientation === "all"
-                  ? Hammer.DIRECTION_ALL
-                  : Hammer.DIRECTION_HORIZONTAL,
-                threshold: 0
-              }));
-              mc.on("panmove", ctrl.handleDrag);
-              mc.on("panend", ctrl.handleDragEnd);
-              mc.on("panstart", ctrl.handleDragStart);
-              context.onunload = () => {
-                mc.off("panmove", ctrl.handleDrag);
-                mc.off("panend", ctrl.handleDragEnd);
-                mc.off("panstart", ctrl.handleDragStart);
-              };
-              context.inited = true;
+            if (dom.childNodes.length > 0) {
+              state.setContentEl(dom);
+              state.updateContentSize(dom);
+              state.touch = new Touch({
+                el: dom,
+                orientation: attrs.orientation,
+                onStart: state.handleDragStart,
+                onMove: state.handleDrag,
+                onEnd: state.handleDragEnd
+              });
+              state.inited = true;
             }
-          }
+          },
+          onremove: () => state.touch && state.touch.destroy()
         },
-        ctrl.list().map((data, listIndex) =>
-          opts.page({
+        state.list().map((data, listIndex) =>
+          attrs.page({
             data,
             listIndex,
             currentIndex
           })
         )
       ),
-      opts.after
-        ? m("." + classes.after, opts.after)
+      attrs.after
+        ? m("." + classes.after, attrs.after)
         : null
     ]
   );
 };
 
-const controller = (opts = {}) => {
-  const list = m.prop([]);
-  if (opts.pageData) {
-    opts.pageData().then(result => initWithResult(result));
+const oninit = vnode => {
+  const attrs = vnode.attrs;
+  const list = prop([]);
+  if (attrs.pageData) {
+    attrs.pageData().then(result => initWithResult(result));
   }
-  const defaultDuration = parseInt(opts.duration, 10) || 160;
-  const index = m.prop(opts.index || -1);
-  const contentEl = m.prop();
+  const duration = parseInt(attrs.duration, 10) || DEFAULT_DURATION;
+  const index = prop(attrs.index || -1);
+  let contentEl;
   let pageSize = 0;
-  const groupBy = m.prop(opts.groupBy || 1);
-  const cancelDragFactor = opts.cancelDragFactor || (1 / 5);
-  const isVertical = opts.orientation === "vertical";
-  const dir = opts.rtl ? -1 : 1;
-  const pageOffsetX = opts.pageOffsetX || 0;
-  const pageOffsetY = opts.pageOffsetY || 0;
+  const groupBy = prop(attrs.groupBy || DEFAULT_GROUP_SIZE);
+  const cancelDragFactor = attrs.cancelDragFactor || DEFAULT_CANCEL_DRAG_FACTOR;
+  const isVertical = attrs.orientation === DEFAULT_ORIENTATION;
+  const dir = attrs.rtl ? -1 : DEFAULT_DIRECTION;
+  const pageOffsetX = attrs.pageOffsetX || DEFAULT_OFFSET_X;
+  const pageOffsetY = attrs.pageOffsetY || DEFAULT_OFFSET_Y;
 
   const initWithResult = result => {
     list(result);
     // First redraw so that pages are drawn
-    // continuation in view's config
+    // continuation in view's oncreate
     m.redraw();
   };
 
@@ -99,10 +99,10 @@ const controller = (opts = {}) => {
     if (oldIndex !== idx) {
       index(idx);
       m.redraw();
-      if (opts.getState) {
-        const el = contentEl();
+      if (attrs.getState) {
+        const el = contentEl;
         const page = getPageEl(el, index());
-        opts.getState({
+        attrs.getState({
           index: idx,
           hasNext: hasNext(),
           hasPrevious: hasPrevious(),
@@ -128,18 +128,18 @@ const controller = (opts = {}) => {
   };
 
   const setTransitionDurationStyle = duration => {
-    contentEl().style["-webkit-transition-duration"] = contentEl().style["transition-duration"] = duration + "ms";
+    contentEl.style["-webkit-transition-duration"] = contentEl.style["transition-duration"] = duration + "ms";
   };
 
   const goTo = (idx, duration) => {
     if (idx < 0 || idx > list().length - 1) {
       return;
     }
-    updateContentSize(contentEl());
+    updateContentSize(contentEl);
     if (duration !== undefined) {
       setTransitionDurationStyle(duration);
     }
-    setTransitionStyle(contentEl(), -dir * idx * pageSize);
+    setTransitionStyle(contentEl, -dir * idx * pageSize);
     setIndex(idx);
   };
 
@@ -169,18 +169,18 @@ const controller = (opts = {}) => {
   };
 
   const goCurrent = (duration = 0) => {
-    updateContentSize(contentEl());
+    updateContentSize(contentEl);
     setTransitionDurationStyle(duration);
     goTo(normalizedStep());
   };
 
-  const goNext = (duration = defaultDuration) => (
-    setTransitionDurationStyle(duration),
+  const goNext = (dur = duration) => (
+    setTransitionDurationStyle(dur),
     index() < list().length ? goTo(normalizedStep(1)) : goTo(normalizedStep())
   );
 
-  const goPrevious = (duration = defaultDuration) => (
-    setTransitionDurationStyle(duration),
+  const goPrevious = (dur = duration) => (
+    setTransitionDurationStyle(dur),
     index() > 0 ? goTo(normalizedStep(-1)) : goTo(normalizedStep())
   );
 
@@ -189,18 +189,18 @@ const controller = (opts = {}) => {
   const hasPrevious = () => index() > 0;
 
   const setContentEl = el => {
-    contentEl(el);
+    contentEl = el;
     updateContentSize(el);
     goCurrent();
   };
 
   const handleDragStart = () => (
-    updateContentSize(contentEl()),
+    updateContentSize(contentEl),
     setTransitionDurationStyle(0)
   );
 
   const handleDrag = e => {
-    const el = contentEl();
+    const el = contentEl;
     const page = getPageEl(el, index());
     const delta = isVertical
       ? e.deltaY + pageOffsetY
@@ -215,32 +215,32 @@ const controller = (opts = {}) => {
   };
 
   const calculateTransitionDuration = velocity => {
-    const el = contentEl();
+    const el = contentEl;
     const page = getPageEl(el, index());
     const width = page.clientWidth;
     const speed = Math.abs(velocity) || 1;
-    let duration = 1 / speed * width;
-    if (duration > defaultDuration) {
-      duration = defaultDuration;
+    let dur = 1 / speed * width;
+    if (dur > duration) {
+      dur = duration;
     }
-    return duration;
+    return dur;
   };
 
   const handleDragEnd = e => {
-    const duration = calculateTransitionDuration(e.velocity);
+    const dur = calculateTransitionDuration(e.velocity);
     const delta = isVertical ? e.deltaY : e.deltaX;
     if (Math.abs(delta) > pageSize * groupBy() * cancelDragFactor) {
       if (dir * delta < 0) {
-        goNext(duration);
+        goNext(dur);
       } else {
-        goPrevious(duration);
+        goPrevious(dur);
       }
     } else {
-      goCurrent(duration);
+      goCurrent(dur);
     }
   };
 
-  return {
+  vnode.state = {
     // component methods
     list,
     contentEl,
@@ -263,6 +263,6 @@ const controller = (opts = {}) => {
 };
 
 export const slider = {
-  controller,
+  oninit,
   view
 };

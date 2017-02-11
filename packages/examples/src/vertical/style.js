@@ -17,7 +17,7 @@ const pagePositions = () => {
 export default [{
   ".example.vertical": [
     pagePositions(), {
-      "&.slider, .page": {
+      "&.mithril-slider, .page": {
         height: styleVariables.size + "px"
       }
     }

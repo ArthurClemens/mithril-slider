@@ -26,7 +26,7 @@ const scrollbarStyle = () => {
 
 export default [{
   ".example.pages": {
-    "&.slider, .content, .page": {
+    "&.mithril-slider, .mithril-slider__content, .page": {
       height: "inherit"
     },
     " .page-content": [

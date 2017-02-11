@@ -6,7 +6,7 @@ const pageWidth = 420;
 export const offset = (pageWidth - regularWidth) / 2;
 
 export default [{
-  " .example.slider.carousel": [
+  " .example.mithril-slider.carousel": [
     pagePositions("ltr", offset),
     {
       width: pageWidth + "px",

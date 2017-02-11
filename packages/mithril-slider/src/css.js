@@ -1,9 +1,9 @@
 
 export const css = [{
-  ".slider": {
+  ".mithril-slider": {
     overflow: "hidden",
 
-    " .content": {
+    " .mithril-slider__content": {
       transitionProperty: "transform",
       transitionTimingFunction: "ease-out",
       // transition-duration set in js
