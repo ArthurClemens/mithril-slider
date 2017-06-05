@@ -3,7 +3,7 @@ import { addStyle } from "../app/styler";
 import { styleVariables } from "../app/variables";
 
 const SIDE_PADDING = 16;
-const VERSION = "1.0.0";
+const VERSION = "1.0.1";
 
 const styles = [{
   ".footer": {

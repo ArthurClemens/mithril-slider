@@ -1,6 +1,6 @@
 # Mithril Content Slider
 
-Compatible with Mithril 1.0.
+Compatible with Mithril 1.0 and higher.
 
 * [Documentation](https://github.com/ArthurClemens/mithril-slider/tree/master/packages/mithril-slider)
 * [Examples](https://github.com/ArthurClemens/mithril-slider/tree/master/packages/examples)

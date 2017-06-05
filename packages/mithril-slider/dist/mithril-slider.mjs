@@ -1,5 +1,5 @@
 import m from 'mithril';
-import Hammer from 'hammerjs';
+import 'hammerjs';
 
 var prop = (function (x) {
   var p = x;
@@ -12,6 +12,7 @@ var prop = (function (x) {
   };
 });
 
+/* global Hammer */
 var Touch = function Touch(_ref) {
   var el = _ref.el,
       orientation = _ref.orientation,

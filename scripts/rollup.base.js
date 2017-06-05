@@ -11,41 +11,29 @@ const env = process.env; // eslint-disable-line no-undef
 const entry = env.ENTRY || "index.js";
 const moduleName = env.MODULE || pkg.name;
 
-const globals = {};
-external.forEach(ext => {
-  switch (ext) {
-  case "mithril":
-    globals["mithril"] = "m";
-    break;
-  default:
-    globals[ext] = ext;
-  }
-});
+const globals = {
+  mithril: "m"
+};
 
-export const createConfig = ({ includeDepencies }) => ({
-  entry,
-  external: (includeDepencies ? [] : external),
-  moduleName,
-  globals,
-  plugins: [
-
-    // Resolve libs in node_modules
-    resolve({
-      jsnext: true,
-      main: true,
-      skip: includeDepencies ? [] : external
-    }),
-
-    // Convert CommonJS modules to ES6, so they can be included in a Rollup bundle
-    commonjs({
-      include: "node_modules/**"
-    }),
-
-    eslint({
-      cache: true
-    }),
-
-    babel()
-  ]
-});
+export const createConfig = ({ includeDepencies, lint }) => {
+  const config = {
+    entry,
+    external: includeDepencies ? ["mithril"] : external,
+    moduleName,
+    globals,
+    plugins: []
+  };
+  config.plugins.push(resolve({
+    jsnext: true,
+    main: true
+  }));
+  config.plugins.push(commonjs({
+    include: "node_modules/**"
+  }));
+  lint && config.plugins.push(eslint({
+    cache: true
+  }));
+  config.plugins.push(babel());
+  return config;
+};
 

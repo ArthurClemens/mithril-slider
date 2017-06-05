@@ -1,4 +1,5 @@
-import Hammer from "hammerjs";
+/* global Hammer */
+import "hammerjs";
 
 export const Touch = ({ el, orientation, onStart, onMove, onEnd }) => {
   const hammer = new Hammer.Manager(el, {});
