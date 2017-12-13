@@ -6,14 +6,14 @@
   "module": "dist/js/examples.mjs",
   "scripts": {
     "build": "DEPS=1 ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.umd.js && ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.es.js",
-    "watch": "DEPS=1 PORT=8080 WATCH_DIR=./dist/ ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.watch.js --watch"    
+    "watch": "DEPS=1 PORT=8080 WATCH_DIR=./dist/ ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.watch.js --watch"
   },
   "dependencies": {
     "fastclick": "^1.0.6",
     "hammerjs": "^2.0.8",
     "j2c": "^1.0.0-4",
     "j2c-plugin-prefix-browser": "^1.0.6",
-    "mithril": "1.1.1"
+    "mithril": "^1.1.6"
   },
   "repository": {},
   "author": "",
