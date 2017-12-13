@@ -45,6 +45,20 @@ var classes = {
   after: "mithril-slider__after"
 };
 
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
 var DEFAULT_DURATION = 160;
 var DEFAULT_CANCEL_DRAG_FACTOR = 1 / 5;
 var DEFAULT_GROUP_SIZE = 1;
@@ -277,7 +291,7 @@ var oninit = function oninit(vnode) {
     }
   };
 
-  vnode.state = {
+  _extends(vnode.state, {
     // component methods
     list: list,
     contentEl: contentEl,
@@ -296,7 +310,7 @@ var oninit = function oninit(vnode) {
     goCurrent: goCurrent,
     goNext: goNext,
     goPrevious: goPrevious
-  };
+  });
 };
 
 var slider = {

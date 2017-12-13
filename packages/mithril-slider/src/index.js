@@ -240,7 +240,7 @@ const oninit = vnode => {
     }
   };
 
-  vnode.state = {
+  Object.assign(vnode.state, {
     // component methods
     list,
     contentEl,
@@ -259,7 +259,7 @@ const oninit = vnode => {
     goCurrent,
     goNext,
     goPrevious
-  };
+  });
 };
 
 export const slider = {

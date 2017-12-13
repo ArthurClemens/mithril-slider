@@ -1116,13 +1116,9 @@ var sliderControls$1 = function sliderControls(sliderController, groupBy, onSetG
 };
 
 var group = {
-  oninit: function oninit(vnode) {
-    vnode.state = {
-      sliderController: undefined,
-      isEditing: false,
-      groupBy: 3
-    };
-  },
+  sliderController: undefined,
+  isEditing: false,
+  groupBy: 3,
   view: function view(_ref2) {
     var attrs = _ref2.attrs,
         state = _ref2.state;

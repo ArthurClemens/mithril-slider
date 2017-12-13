@@ -60,13 +60,9 @@ const sliderControls = (sliderController, groupBy, onSetGroupBy) =>
     ] : null);
 
 export default {
-  oninit : vnode => {
-    vnode.state = {
-      sliderController: undefined,
-      isEditing: false,
-      groupBy: 3
-    };
-  },
+  sliderController: undefined,
+  isEditing: false,
+  groupBy: 3,
   view: ({attrs, state}) => {
     const sliderController = state.sliderController;
     const groupBy = state.groupBy;
