@@ -5,8 +5,9 @@
   "main": "dist/js/examples.js",
   "module": "dist/js/examples.mjs",
   "scripts": {
+    "dev": "DEPS=1 PORT=3000 WATCH_DIR=./dist/ ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.watch.js --watch",
     "build": "DEPS=1 ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.umd.js && ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.es.js",
-    "dev": "DEPS=1 PORT=3000 WATCH_DIR=./dist/ ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.watch.js --watch"
+    "github": "node scripts/github.js"
   },
   "dependencies": {
     "fastclick": "^1.0.6",
