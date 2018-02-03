@@ -1,6 +1,6 @@
 {
   "name": "examples",
-  "version": "0.0.3",
+  "version": "1.1.0",
   "description": "",
   "main": "dist/js/examples.js",
   "module": "dist/js/examples.mjs",
@@ -20,6 +20,6 @@
   "author": "",
   "license": "",
   "devDependencies": {
-    "mithril-slider": "^1.0.1"
+    "mithril-slider": "^1.1.0"
   }
 }
