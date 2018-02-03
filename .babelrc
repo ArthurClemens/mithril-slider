@@ -1,6 +1,6 @@
 {
   "presets": [
-    ["es2015", { "modules": false }]
+    ["env", { "modules": false }]
   ],
   "plugins": [
     "external-helpers",
@@ -10,9 +10,15 @@
   "env": {
     "test": {
       "presets": [
-        "es2015"
+        "env"
       ],
       "plugins": ["transform-runtime"]
+    },
+    "production": {
+      "presets": [
+        ["env", { "modules": false }],
+        ["minify"]
+      ],
     }
   }
 }

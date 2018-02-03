@@ -11,8 +11,10 @@ const dest = env.DEST || pkg.module;
 
 const baseConfig = createConfig({ includeDepencies });
 const targetConfig = Object.assign({}, baseConfig, {
-  dest,
-  format: "es"
+  output: Object.assign({}, baseConfig.output, {
+    file: dest,
+    format: "es"
+  })
 });
 
 export default targetConfig;

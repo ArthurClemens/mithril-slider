@@ -48,8 +48,8 @@ To build the source:
 To run the examples:
 
 * `cd packages/examples`
-* `npm run watch`
-* Open browser at [localhost:8080](http://localhost:8080/)
+* `npm run dev`
+* Open browser at [localhost:3000](http://localhost:3000/)
 
 
 

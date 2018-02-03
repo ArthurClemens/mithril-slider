@@ -13,9 +13,11 @@ const serverPort = env.PORT;
 
 const baseConfig = createConfig({ includeDepencies, lint: false });
 const targetConfig = Object.assign({}, baseConfig, {
-  dest,
-  format: "umd",
-  sourceMap: false
+  output: Object.assign({}, baseConfig.output, {
+    file: dest,
+    format: "umd",
+    sourcemap: false
+  })
 });
 
 targetConfig.plugins.push(

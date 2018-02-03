@@ -8,7 +8,7 @@ import commonjs from "rollup-plugin-commonjs";
 export const pkg = JSON.parse(fs.readFileSync("./package.json"));
 const external = Object.keys(pkg.dependencies || {});
 const env = process.env; // eslint-disable-line no-undef
-const entry = env.ENTRY || "index.js";
+const input = env.ENTRY || "index.js";
 const moduleName = env.MODULE || pkg.name;
 
 const globals = {
@@ -17,10 +17,12 @@ const globals = {
 
 export const createConfig = ({ includeDepencies, lint }) => {
   const config = {
-    entry,
+    input,
     external: includeDepencies ? ["mithril"] : external,
-    moduleName,
-    globals,
+    output: {
+      name: moduleName,
+      globals
+    },
     plugins: []
   };
   config.plugins.push(resolve({

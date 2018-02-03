@@ -1,5 +1,5 @@
-import m from 'mithril';
 import 'hammerjs';
+import m from 'mithril';
 
 var prop = (function (x) {
   var p = x;

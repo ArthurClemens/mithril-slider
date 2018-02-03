@@ -3,7 +3,6 @@ import { addStyle } from "../app/styler";
 import { styleVariables } from "../app/variables";
 
 const SIDE_PADDING = 16;
-const VERSION = "1.0.1";
 
 const styles = [{
   ".footer": {
@@ -29,14 +28,17 @@ const styles = [{
 addStyle("slider-examples-footer", styles);
 
 export default (opts = {}) => {
-  return m(".footer", {
-    dir: "ltr"
-  }, [!opts.home ? m("a",
-    {
-      href: "/",
-      oncreate: m.route.link
-    }, "All examples") : null,
+  return m(".footer",
+    { dir: "ltr" },
+    [!opts.home
+      ? m("a",
+        {
+          href: "/",
+          oncreate: m.route.link
+        }, "All examples")
+      : null,
     m("hr"),
-    m.trust(`mithril-slider, content slider for Mithril on mobile and desktop. This site runs on version ${VERSION}. Project page on <a href="https://github.com/ArthurClemens/mithril-slider">Github</a>.`)
-  ]);
+    m.trust("mithril-slider, content slider for Mithril on mobile and desktop. Project page on <a href='https://github.com/ArthurClemens/mithril-slider'>Github</a>.")
+    ]
+  );
 };

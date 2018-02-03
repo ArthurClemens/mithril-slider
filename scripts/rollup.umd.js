@@ -10,9 +10,11 @@ const dest = env.DEST || pkg.main;
 
 const baseConfig = createConfig({ includeDepencies });
 const targetConfig = Object.assign({}, baseConfig, {
-  dest,
-  format: "umd",
-  sourceMap: true
+  output: Object.assign({}, baseConfig.output, {
+    file: dest,
+    format: "umd",
+    sourcemap: true
+  })
 });
 
 targetConfig.plugins.push(uglify());

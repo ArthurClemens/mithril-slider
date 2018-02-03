@@ -1,6 +1,6 @@
 import FastClick from 'fastclick';
-import m from 'mithril';
 import 'hammerjs';
+import m from 'mithril';
 import { prefixPlugin } from 'j2c-plugin-prefix-browser';
 import J2c from 'j2c';
 
@@ -59,6 +59,20 @@ var classes = {
   content: "mithril-slider__content",
   before: "mithril-slider__before",
   after: "mithril-slider__after"
+};
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
 };
 
 var DEFAULT_DURATION = 160;
@@ -293,7 +307,7 @@ var oninit = function oninit(vnode) {
     }
   };
 
-  vnode.state = {
+  _extends(vnode.state, {
     // component methods
     list: list,
     contentEl: contentEl,
@@ -312,7 +326,7 @@ var oninit = function oninit(vnode) {
     goCurrent: goCurrent,
     goNext: goNext,
     goPrevious: goPrevious
-  };
+  });
 };
 
 var slider = {
@@ -524,7 +538,6 @@ var indexStyle = [{
 }];
 
 var SIDE_PADDING = 16;
-var VERSION = "1.0.1";
 
 var styles = [{
   ".footer": {
@@ -552,12 +565,10 @@ addStyle("slider-examples-footer", styles);
 var footer = (function () {
   var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-  return m(".footer", {
-    dir: "ltr"
-  }, [!opts.home ? m("a", {
+  return m(".footer", { dir: "ltr" }, [!opts.home ? m("a", {
     href: "/",
     oncreate: m.route.link
-  }, "All examples") : null, m("hr"), m.trust("mithril-slider, content slider for Mithril on mobile and desktop. This site runs on version " + VERSION + ". Project page on <a href=\"https://github.com/ArthurClemens/mithril-slider\">Github</a>.")]);
+  }, "All examples") : null, m("hr"), m.trust("mithril-slider, content slider for Mithril on mobile and desktop. Project page on <a href='https://github.com/ArthurClemens/mithril-slider'>Github</a>.")]);
 });
 
 var DATA_URL = "data/server.json";

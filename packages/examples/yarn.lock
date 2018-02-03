@@ -18,13 +18,6 @@ j2c@^1.0.0-4:
   version "1.0.0-4"
   resolved "https://registry.yarnpkg.com/j2c/-/j2c-1.0.0-4.tgz#a1c85b2b8bc4f71cb8f8bb53e8b396fa3fd899f0"
 
-mithril-slider@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/mithril-slider/-/mithril-slider-1.0.1.tgz#a1dff3f31bdfaef5ebd2af82e5662f4b00d7474c"
-  dependencies:
-    hammerjs "^2.0.8"
-    mithril "^1.1.1"
-
-mithril@^1.1.1, mithril@^1.1.6:
+mithril@^1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/mithril/-/mithril-1.1.6.tgz#bd2cc0de3d3c86076a6a7a30367a601a1bd108f3"
