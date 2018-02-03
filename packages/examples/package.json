@@ -1,6 +1,7 @@
 {
   "name": "examples",
   "version": "1.1.0",
+  "private": true,
   "description": "",
   "main": "dist/js/examples.js",
   "module": "dist/js/examples.mjs",
