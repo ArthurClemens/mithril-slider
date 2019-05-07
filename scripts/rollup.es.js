@@ -1,21 +1,27 @@
-/* globals process */
+/* global process */
 /*
 Build to a module that has ES2015 module syntax but otherwise only syntax features that node supports
 https://github.com/rollup/rollup/wiki/jsnext:main
 */
 import { pkg, createConfig } from "./rollup.base.js";
+import babel from "rollup-plugin-babel";
 
-const includeDepencies = !!parseInt(process.env.DEPS, 10) || false; // Use `false` if you are creating a library, or if you are including external script in html
-const env = process.env; // eslint-disable-line no-undef
-const dest = env.DEST || pkg.module;
-
-const baseConfig = createConfig({ includeDepencies });
+const env = process.env;
+const baseConfig = createConfig();
 const targetConfig = Object.assign({}, baseConfig, {
-  output: Object.assign({}, baseConfig.output, {
-    file: dest,
-    format: "es"
-  })
+  output: Object.assign(
+    {},
+    baseConfig.output,
+    {
+      format: "es",
+      file: `${env.DEST || pkg.main}.mjs`,
+    }
+  )
 });
-
+targetConfig.plugins.unshift(
+  babel({
+    configFile: "../../babel.config.es.js"
+  })
+);
 export default targetConfig;
 

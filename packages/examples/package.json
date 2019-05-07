@@ -3,24 +3,36 @@
   "version": "1.1.0",
   "private": true,
   "description": "",
-  "main": "dist/js/examples.js",
+  "main": "dist/js/examples",
   "module": "dist/js/examples.mjs",
   "scripts": {
-    "dev": "DEPS=1 PORT=3000 WATCH_DIR=./dist/ ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.watch.js --watch",
-    "build": "DEPS=1 ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.umd.js && ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.es.js",
+    "lint": "eslint ./src",
+    "dev": "npm-run-all --parallel dev:watch dev:serve",
+    "dev:serve": "CYANO=cyano-mithril ../../node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ../../scripts/webpack.config.dev.js --disableHostCheck true --port 3000 --host 0.0.0.0",
+    "dev:watch": "CYANO=cyano-mithril ../../node_modules/webpack/bin/webpack.js --watch --config ../../scripts/webpack.config.dev.js",
+    "webpack": "CYANO=cyano-mithril ../../node_modules/webpack/bin/webpack.js --config ../../scripts/webpack.config.prod.js",
+    "build": "npm run build:webpack",
+    "build:webpack": "npm run clean && npm run webpack",
+    "serve": "http-server -c-1 -p 8080 dist",
+    "build:rollup:umd": "CYANO=cyano-mithril ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.umd.js",
+    "build:rollup:es": "CYANO=cyano-mithril ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.es.js",
+    "build:browserify": "CYANO=cyano-mithril node ../../scripts/browserify.js",
+    "clean": "rm -rf dist/js/*",
     "github": "node scripts/github.js"
   },
   "dependencies": {
+    "cyano-mithril": "^0.5.1",
     "fastclick": "^1.0.6",
     "hammerjs": "^2.0.8",
     "j2c": "^1.0.0-4",
-    "j2c-plugin-prefix-browser": "^1.0.6",
-    "mithril": "^1.1.6"
+    "j2c-plugin-prefix-browser": "^1.0.7",
+    "mithril": "2.0.0-rc.4"
   },
   "repository": {},
   "author": "",
   "license": "",
   "devDependencies": {
-    "mithril-slider": "^1.1.0"
+    "mithril-slider": "^1.1.0",
+    "npm-run-all": "^4.1.5"
   }
 }

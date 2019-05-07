@@ -1,13 +1,16 @@
 {
   "name": "mithril-slider",
-  "main": "dist/mithril-slider.js",
+  "main": "dist/mithril-slider",
   "module": "dist/mithril-slider.mjs",
   "version": "1.1.0",
   "description": "Content Slider for Mithril on mobile and desktop",
   "scripts": {
-    "build": "npm run build-main && npm run build-css",
-    "build-main": "DEPS=0 ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.umd.js && DEPS=0 ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.es.js",
-    "build-css": "BABEL_ENV=test ../../node_modules/babel-cli/bin/babel-node.js scripts/build-css.js > dist/mithril-slider.css"
+    "lint": "eslint ./src",
+    "build": "npm run clean && npm run rollup && npm run build-css",
+    "rollup": "../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.umd.js && ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.es.js",
+    "clean": "rm -rf dist/*",
+    "size": "gzip -c dist/cyano-react.js | wc -c",
+    "build-css": "BABEL_ENV=test node --experimental-modules ./scripts/build-css > dist/mithril-slider.css"
   },
   "dependencies": {
     "hammerjs": "^2.0.8",

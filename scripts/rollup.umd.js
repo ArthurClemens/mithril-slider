@@ -1,22 +1,30 @@
+/* global process */
 /*
 Build to an Universal Module Definition
 */
-import { pkg, createConfig } from "./rollup.base.js";
-import uglify from "rollup-plugin-uglify";
+import { pkg, createConfig } from "./rollup.base";
+import { terser } from "rollup-plugin-terser";
+import babel from "rollup-plugin-babel";
 
-const env = process.env; // eslint-disable-line no-undef
-const includeDepencies = !!parseInt(env.DEPS, 10) || false; // Use `false` if you are creating a library, or if you are including external script in html
-const dest = env.DEST || pkg.main;
-
-const baseConfig = createConfig({ includeDepencies });
+const env = process.env;
+const baseConfig = createConfig();
 const targetConfig = Object.assign({}, baseConfig, {
-  output: Object.assign({}, baseConfig.output, {
-    file: dest,
-    format: "umd",
-    sourcemap: true
-  })
+  output: Object.assign(
+    {},
+    baseConfig.output,
+    {
+      format: env.FORMAT || "umd",
+      file: `${env.DEST || pkg.main}.js`,
+      sourcemap: true,
+      extend: true,
+    }
+  )
 });
-
-targetConfig.plugins.push(uglify());
+targetConfig.plugins.unshift(
+  babel({
+    configFile: "../../babel.config.umd.js"
+  })
+);
+targetConfig.plugins.push(terser());
 
 export default targetConfig;
