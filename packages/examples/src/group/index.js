@@ -9,7 +9,7 @@ addStyle("group", style);
 
 const callRight = (fn, ...args) =>
   (...remainingArgs) =>
-  fn(...remainingArgs, ...args);
+    fn(...remainingArgs, ...args);
 
 const page = (opts, groupBy) => {
   const currentIndex = opts.currentIndex;

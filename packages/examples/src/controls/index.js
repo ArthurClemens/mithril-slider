@@ -31,31 +31,31 @@ const page = opts => {
 };
 
 const sliderControls = (sliderController, isEditing, setIsEditing) =>
- sliderController
-  ? m(".slider-controls.slider-controls-controls",
-    [
-      m("input.goto", {
-        value: isEditing ? "" : sliderController.index() + 1,
-        oninput: e => {
-          setIsEditing(true);
-          const idx = parseInt(e.target.value, 10) - 1;
-          if (!isNaN(idx)) {
-            sliderController.goTo(idx, 0);
-            setIsEditing(false);
+  sliderController
+    ? m(".slider-controls.slider-controls-controls",
+      [
+        m("input.goto", {
+          value: isEditing ? "" : sliderController.index() + 1,
+          oninput: e => {
+            setIsEditing(true);
+            const idx = parseInt(e.target.value, 10) - 1;
+            if (!isNaN(idx)) {
+              sliderController.goTo(idx, 0);
+              setIsEditing(false);
+            }
           }
-        }
-      }),
-      m("a.prev", {
-        class: sliderController.hasPrevious() ? "enabled" : "",
-        onclick: () => sliderController.goPrevious()
-      }, "Previous"),
-      m("a.next", {
-        class: sliderController.hasNext() ? "enabled" : "",
-        onclick: () => sliderController.goNext()
-      }, "Next")
-    ]
-  )
-  : null;
+        }),
+        m("a.prev", {
+          class: sliderController.hasPrevious() ? "enabled" : "",
+          onclick: () => sliderController.goPrevious()
+        }, "Previous"),
+        m("a.next", {
+          class: sliderController.hasNext() ? "enabled" : "",
+          onclick: () => sliderController.goNext()
+        }, "Next")
+      ]
+    )
+    : null;
 
 export default {
   view: ({attrs, state}) => {

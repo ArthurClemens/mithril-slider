@@ -16,7 +16,6 @@
     "serve": "http-server -c-1 -p 8080 dist",
     "build:rollup:umd": "CYANO=cyano-mithril ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.umd.js",
     "build:rollup:es": "CYANO=cyano-mithril ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.es.js",
-    "build:browserify": "CYANO=cyano-mithril node ../../scripts/browserify.js",
     "clean": "rm -rf dist/js/*",
     "github": "node scripts/github.js"
   },
