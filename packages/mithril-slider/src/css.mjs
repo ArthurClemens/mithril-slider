@@ -1,5 +1,5 @@
 
-export const css = [{
+const css = [{
   ".mithril-slider": {
     overflow: "hidden",
 
@@ -12,3 +12,4 @@ export const css = [{
   }
 }];
 
+export { css };

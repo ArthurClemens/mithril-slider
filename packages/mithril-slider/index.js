@@ -1,2 +1,2 @@
 export { slider } from "./src/index";
-export { css } from "./src/css";
+export { css } from "./src/css.mjs";
