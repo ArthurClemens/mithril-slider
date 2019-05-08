@@ -26,6 +26,7 @@ module.exports = {
       // Keep in this order!
       "mithril": path.resolve(baseDir, "node_modules/mithril/mithril.js"),
       "react": path.resolve(baseDir, "node_modules/react"),
+      "react-dom": path.resolve(baseDir, "node_modules/react-dom"),
       // Resolve "cyano" to the proper lib
       "cyano": path.resolve(baseDir, `node_modules/${whichCyano}`),
     },

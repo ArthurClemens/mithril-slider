@@ -1,4 +1,4 @@
-import m from "mithril";
+import m from "../node_modules/mithril/mithril";
 import prop from "./prop";
 import { Touch } from "./touch";
 import { classes } from "./classes";

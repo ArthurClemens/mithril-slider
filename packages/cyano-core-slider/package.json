@@ -1,0 +1,39 @@
+{
+  "name": "cyano-core-slider",
+  "private": true,
+  "main": "dist/cyano-core-slider",
+  "module": "dist/cyano-core-slider.mjs",
+  "version": "0.1.0",
+  "description": "Content Slider for Mithril and React on mobile and desktop",
+  "scripts": {
+    "lint": "eslint ./src",
+    "build": "npm run clean && npm run rollup && npm run build-css",
+    "rollup": "../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.umd.js && ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.es.js",
+    "clean": "rm -rf dist/*",
+    "size": "gzip -c dist/cyano-react.js | wc -c",
+    "build-css": "BABEL_ENV=test node --experimental-modules ./scripts/build-css > dist/mithril-slider.css"
+  },
+  "dependencies": {
+    "hammerjs": "^2.0.8",
+    "patchinko": "^4.1.0"
+  },
+  "devDependencies": {
+    "j2c": "1.0.0-4"
+  },
+  "keywords": [
+    "slider",
+    "carousel",
+    "mobile",
+    "mithril"
+  ],
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ArthurClemens/cyano-slider.git"
+  },
+  "author": "Arthur Clemens <arthurclemens@gmail.com> (http://visiblearea.com)",
+  "license": "MIT"
+}

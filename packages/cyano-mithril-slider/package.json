@@ -1,0 +1,26 @@
+{
+  "name": "cyano-mithril-slider",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/cyano-mithril-slider",
+  "module": "dist/cyano-mithril-slider.mjs",
+  "sideEffects": false,
+  "scripts": {
+    "clean": "rm -rf dist/*",
+    "rollup": "../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.umd.js && ../../node_modules/rollup/bin/rollup -c ../../scripts/rollup.es.js",
+    "build": "npm run clean && npm run rollup"
+  },
+  "files": [
+    "dist",
+    "index.d.ts",
+    "README.md"
+  ],
+  "dependencies": {
+    "cyano-mithril": "^0.5.1",
+    "cyano-core-slider": "^0.1.0"
+  },
+  "devDependencies": {},
+  "author": "Arthur Clemens <arthurclemens@gmail.com> (http://arthurclemens.com)",
+  "homepage": "https://github.com/ArthurClemens/cyano-slider",
+  "license": "MIT"
+}
