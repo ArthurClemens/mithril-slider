@@ -2665,11 +2665,13 @@ var hammer = createCommonjsModule(function (module) {
 
 /* global Hammer */
 const Touch = (_ref) => {
-  let el = _ref.el,
-      orientation = _ref.orientation,
-      onStart = _ref.onStart,
-      onMove = _ref.onMove,
-      onEnd = _ref.onEnd;
+  let {
+    el,
+    orientation,
+    onStart,
+    onMove,
+    onEnd
+  } = _ref;
   const hammer = new Hammer.Manager(el, {});
   hammer.add(new Hammer.Pan({
     direction: orientation === "vertical" ? Hammer.DIRECTION_VERTICAL : orientation === "all" ? Hammer.DIRECTION_ALL : Hammer.DIRECTION_HORIZONTAL,
@@ -2703,8 +2705,10 @@ const DEFAULT_OFFSET_X = 0;
 const DEFAULT_OFFSET_Y = 0;
 
 const view = (_ref) => {
-  let state = _ref.state,
-      attrs = _ref.attrs;
+  let {
+    state,
+    attrs
+  } = _ref;
 
   if (attrs.sliderController) {
     attrs.sliderController(state);
@@ -2724,7 +2728,9 @@ const view = (_ref) => {
   }, [attrs.before ? m("." + classes.before, attrs.before) : null, m("div", {
     class: classes.content,
     onupdate: (_ref2) => {
-      let dom = _ref2.dom;
+      let {
+        dom
+      } = _ref2;
 
       if (state.inited) {
         return;
