@@ -38,7 +38,7 @@ export default (opts = {}) => {
         }, "All examples")
       : null,
     m("hr"),
-    m.trust("mithril-slider, content slider for Mithril on mobile and desktop. Project page on <a href='https://github.com/ArthurClemens/mithril-slider'>Github</a>.")
+    m.trust("cyano-mithril-slider, content slider for Mithril on mobile and desktop. Project page on <a href='https://github.com/ArthurClemens/cyano-slider'>Github</a>.")
     ]
   );
 };

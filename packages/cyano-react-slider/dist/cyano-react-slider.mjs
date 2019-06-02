@@ -2810,8 +2810,6 @@ const _Slider = _ref2 => {
 
   const actionsRef = useRef(Actions(update));
   const actions = actionsRef.current;
-  console.log("state", state);
-  debugger;
 
   const _useState = useState(),
         _useState2 = _slicedToArray(_useState, 2),

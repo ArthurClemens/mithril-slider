@@ -1,10 +1,10 @@
-// import "../app/no-tap-delay";
 import m from "mithril";
-import { css } from "mithril-slider";
 import { addStyle } from "../app/styler";
+import { css } from "cyano-mithril-slider";
 import appStyle from "../app/style";
-import indexStyle from "./style";
 import footer from "../app/footer";
+import indexStyle from "./style";
+
 addStyle("slider", css);
 addStyle("slider-examples-app", appStyle);
 addStyle("slider-examples-index", indexStyle);

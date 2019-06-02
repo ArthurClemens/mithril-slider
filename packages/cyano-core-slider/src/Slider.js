@@ -52,9 +52,6 @@ export const _Slider = ({ h, useReducer, useState, useEffect, useRef, getRef, ..
   });
   const actionsRef = useRef(Actions(update));
   const actions = actionsRef.current;
-  
-  console.log("state", state);
-  debugger;
 
   const [domElement, setDomElement] = useState();
   const [contentElement, setContentElement] = useState();
@@ -112,6 +109,7 @@ export const _Slider = ({ h, useReducer, useState, useEffect, useRef, getRef, ..
   };
 
   const setTransitionStyle = (el, value) => {
+    console.log("setTransitionStyle", el, value);
     const style = el.style;
     style.transform = style["-webkit-transform"] = style["-moz-transform"] = style["-ms-transform"] = createStyleProps(value);
   };
@@ -150,23 +148,26 @@ export const _Slider = ({ h, useReducer, useState, useEffect, useRef, getRef, ..
   };
 
   const updateContentSize = el => {
-    const prop = isVertical ? "height" : "width";
+    const which = isVertical ? "height" : "width";
     const page = el.childNodes[0];
+    console.log("updateContentSize", page);
     if (!page) {
       return;
     }
-    if (page.getBoundingClientRect()[prop]) {
-      const newPageSize = page.getBoundingClientRect()[prop];
-      // console.log("updateContentSize", "pageSize", pageSize);
+    console.log("getBoundingClientRect", page.getBoundingClientRect()[which]);
+    if (page.getBoundingClientRect()[which]) {
+      const newPageSize = page.getBoundingClientRect()[which];
+      console.log("updateContentSize", "pageSize", pageSize);
       if (newPageSize !== pageSize) {
         actions.setPageSize(newPageSize);
       }
-      el.style[prop] = (list.length * pageSize) + "px";
+      el.style[which] = (list.length * pageSize) + "px";
     }
   };
 
   const goCurrent = (duration = 0) => {
-    // updateContentSize(contentElement);
+    console.log("goCurrent getNormalizedStep", getNormalizedStep());
+    updateContentSize(contentElement);
     setTransitionDurationStyle(duration);
     goTo(getNormalizedStep());
   };

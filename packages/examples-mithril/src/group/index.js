@@ -1,11 +1,12 @@
 import m from "mithril";
-import { withHooks, useState } from "mithril-hooks";
-import { Slider } from "cyano-mithril-slider";
-import { getPageData, fadeInImage } from "../app/common";
-import preloader from "../preloader";
-import footer from "../app/footer";
 import { addStyle } from "../app/styler";
+import { getPageData, fadeInImage } from "../app/common";
+import { Slider } from "cyano-mithril-slider";
+import { withHooks, useState } from "mithril-hooks";
+import footer from "../app/footer";
+import preloader from "../preloader";
 import style from "./style";
+
 addStyle("group", style);
 
 const callRight = (fn, ...args) =>
@@ -48,7 +49,7 @@ const sliderControls = (sliderController, groupBy, setGroupBy) =>
               setGroupBy(size);
               setTimeout(() => {
                 sliderController.goCurrent();
-              }, 0);
+              }, 100);
             },
             class: size === groupBy ? "selected" : ""
           }, size);

@@ -1,10 +1,11 @@
 import m from "mithril";
-import { Slider } from "../../../cyano-mithril-slider/dist/cyano-mithril-slider";
-import { getPageData, fadeInImage } from "../app/common";
-import preloader from "../preloader";
-import footer from "../app/footer";
 import { addStyle } from "../app/styler";
+import { getPageData, fadeInImage } from "../app/common";
+import { Slider } from "cyano-mithril-slider";
+import footer from "../app/footer";
+import preloader from "../preloader";
 import style from "./style";
+
 addStyle("slider-examples-vertical", style);
 
 const page = opts => {

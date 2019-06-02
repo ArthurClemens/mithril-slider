@@ -20,11 +20,12 @@ const page = opts => {
   ]) : null;
   return m(".page",
     { key: listIndex },
-    content);
+    content
+  );
 };
 
 export default {
-  view: ({attrs}) => {
+  view: ({ attrs }) => {
     return m("div", [
       m(Slider, {
         pageData: getPageData,

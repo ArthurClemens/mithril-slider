@@ -2810,7 +2810,6 @@ const _Slider = _ref2 => {
 
   const actionsRef = useRef(Actions(update));
   const actions = actionsRef.current;
-  console.log("state", state);
 
   const _useState = useState(),
         _useState2 = _slicedToArray(_useState, 2),
@@ -2870,6 +2869,7 @@ const _Slider = _ref2 => {
   };
 
   const setTransitionStyle = (el, value) => {
+    console.log("setTransitionStyle", el, value);
     const style = el.style;
     style.transform = style["-webkit-transform"] = style["-moz-transform"] = style["-ms-transform"] = createStyleProps(value);
   };
@@ -2914,27 +2914,32 @@ const _Slider = _ref2 => {
   };
 
   const updateContentSize = el => {
-    const prop = isVertical ? "height" : "width";
+    const which = isVertical ? "height" : "width";
     const page = el.childNodes[0];
+    console.log("updateContentSize", page);
 
     if (!page) {
       return;
     }
 
-    if (page.getBoundingClientRect()[prop]) {
-      const newPageSize = page.getBoundingClientRect()[prop]; // console.log("updateContentSize", "pageSize", pageSize);
+    console.log("getBoundingClientRect", page.getBoundingClientRect()[which]);
+
+    if (page.getBoundingClientRect()[which]) {
+      const newPageSize = page.getBoundingClientRect()[which];
+      console.log("updateContentSize", "pageSize", pageSize);
 
       if (newPageSize !== pageSize) {
         actions.setPageSize(newPageSize);
       }
 
-      el.style[prop] = list.length * pageSize + "px";
+      el.style[which] = list.length * pageSize + "px";
     }
   };
 
   const goCurrent = function goCurrent() {
-    let duration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0; // updateContentSize(contentElement);
-
+    let duration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    console.log("goCurrent getNormalizedStep", getNormalizedStep());
+    updateContentSize(contentElement);
     setTransitionDurationStyle(duration);
     goTo(getNormalizedStep());
   };

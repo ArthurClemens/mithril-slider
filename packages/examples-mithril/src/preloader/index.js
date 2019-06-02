@@ -1,6 +1,7 @@
 import m from "mithril";
 import { addStyle } from "../app/styler";
 import style from "./style";
+
 addStyle("preloader", style);
 
 export default m(".preloader",

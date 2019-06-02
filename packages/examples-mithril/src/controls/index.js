@@ -1,12 +1,26 @@
 import m from "mithril";
-import { withHooks, useState } from "mithril-hooks";
-import { Slider } from "cyano-mithril-slider";
-import { fadeInImage } from "../app/common";
-import preloader from "../preloader";
-import footer from "../app/footer";
 import { addStyle } from "../app/styler";
+import { fadeInImage } from "../app/common";
+import { Slider } from "cyano-mithril-slider";
+import { withHooks, useState } from "mithril-hooks";
+import footer from "../app/footer";
+import preloader from "../preloader";
 import style from "./style";
+
 addStyle("slider-examples-controls", style);
+
+const PAGE_URLS = [
+  "http://arthurclemens.github.io/assets/mithril-slider/img/01.jpg",
+  "http://arthurclemens.github.io/assets/mithril-slider/img/02.jpg",
+  "http://arthurclemens.github.io/assets/mithril-slider/img/03.jpg",
+  "http://arthurclemens.github.io/assets/mithril-slider/img/04.jpg",
+  "http://arthurclemens.github.io/assets/mithril-slider/img/05.jpg",
+  "http://arthurclemens.github.io/assets/mithril-slider/img/06.jpg",
+  "http://arthurclemens.github.io/assets/mithril-slider/img/07.jpg",
+  "http://arthurclemens.github.io/assets/mithril-slider/img/08.jpg",
+  "http://arthurclemens.github.io/assets/mithril-slider/img/09.jpg",
+  "http://arthurclemens.github.io/assets/mithril-slider/img/10.jpg"
+];
 
 const page = opts => {
   const currentIndex = opts.currentIndex;
@@ -25,10 +39,13 @@ const page = opts => {
         preloader
       ])
     : null;
-  return m(".page", {
-    key: listIndex,
-    class: currentIndex === listIndex ? "current-page" : null
-  }, content);
+  return m(".page",
+    {
+      key: listIndex,
+      class: currentIndex === listIndex ? "current-page" : null
+    },
+    content
+  );
 };
 
 const sliderControls = (sliderController, isEditing, setIsEditing) =>
@@ -64,18 +81,7 @@ const Controls = attrs => {
 
   const rtl = attrs.rtl;
   const mySlider = m(Slider, {
-    pageData: () => Promise.resolve([
-      "http://arthurclemens.github.io/assets/mithril-slider/img/01.jpg",
-      "http://arthurclemens.github.io/assets/mithril-slider/img/02.jpg",
-      "http://arthurclemens.github.io/assets/mithril-slider/img/03.jpg",
-      "http://arthurclemens.github.io/assets/mithril-slider/img/04.jpg",
-      "http://arthurclemens.github.io/assets/mithril-slider/img/05.jpg",
-      "http://arthurclemens.github.io/assets/mithril-slider/img/06.jpg",
-      "http://arthurclemens.github.io/assets/mithril-slider/img/07.jpg",
-      "http://arthurclemens.github.io/assets/mithril-slider/img/08.jpg",
-      "http://arthurclemens.github.io/assets/mithril-slider/img/09.jpg",
-      "http://arthurclemens.github.io/assets/mithril-slider/img/10.jpg"
-    ]),
+    pageData: () => Promise.resolve(PAGE_URLS),
     page,
     pageOffsetX: attrs.pageOffsetX,
     sliderController: ctrl => setSliderController(ctrl),
